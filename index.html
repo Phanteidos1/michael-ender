@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="Michael Ender">
+<meta property="og:description" content="Writer, builder, tournament poker pro and coach. Walk the labyrinth to the center to meet me.">
+<meta property="og:image" content="/img/center.jpg">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
+<script defer src="/_vercel/insights/script.js"></script>
+<title>Michael Ender</title>
+<meta name="description" content="Michael Ender: writer, builder, tournament poker pro and coach. Walk the labyrinth to the center to meet him.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a walking labyrinth (left, sticky) and the room you're standing in (right). Each ring is one part of Michael; the center is where you meet him. */
+:root{
+  --bg:#E8ECE2;        /* sage stone, a garden labyrinth in daylight */
+  --panel:#F6F7F1;
+  --ink:#22261E;
+  --muted:#5D6555;
+  --wall:#B9BFAE;
+  --path:#D9DECF;
+  --candle:#B97A12;    /* lantern gold */
+  --clay:#9C4A30;
+  --on-candle:#FFFFFF;
+  --display:"Gloock","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"Figtree","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#13160F; --panel:#1B1F16; --ink:#ECE9DC; --muted:#A5AC97; --wall:#3A4232; --path:#22281C;
+    --candle:#E8B24E; --clay:#D98463; --on-candle:#17130A; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13160F; --panel:#1B1F16; --ink:#ECE9DC; --muted:#A5AC97; --wall:#3A4232; --path:#22281C;
+  --candle:#E8B24E; --clay:#D98463; --on-candle:#17130A; color-scheme:dark;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;margin:0;padding-inline:20px}
+.page{max-width:1180px;margin:0 auto;padding-block:18px 40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+a{color:var(--clay);text-underline-offset:3px}
+button,a{font-family:inherit}
+:focus-visible{outline:3px solid var(--candle);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.05;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+
+/* the labyrinth */
+.maze{min-width:0;position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);display:flex;flex-direction:column;gap:14px}
+.maze header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.maze header b{font-family:var(--display);font-weight:400;font-size:24px}
+.maze header span{color:var(--muted)}
+.maze svg{width:100%;max-width:560px;height:auto;display:block;margin:0 auto;overflow:visible}
+.maze svg .wall{fill:none;stroke:var(--wall);stroke-width:9;stroke-linecap:round}
+.maze svg .ring{fill:none;stroke:var(--path);stroke-width:30}
+.maze svg .trail{fill:none;stroke:var(--candle);stroke-width:3;stroke-dasharray:2 9;stroke-linecap:round;opacity:.75}
+.maze svg .lab{font-family:var(--mono);font-size:13px;letter-spacing:.18em;fill:var(--muted);text-transform:uppercase;cursor:pointer}
+.maze svg .lab.here{fill:var(--candle)}
+.maze svg .lab:hover{fill:var(--ink)}
+.maze svg .stone{fill:var(--wall)}
+.maze svg .stone.seen{fill:var(--candle)}
+.maze svg .heart{fill:var(--panel);stroke:var(--wall);stroke-width:3}
+.maze svg .walker{fill:var(--candle)}
+.maze svg .glow{fill:var(--candle);opacity:.18}
+.maze nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.btn{border-radius:999px;padding:12px 22px;font-weight:700;font-size:16px;cursor:pointer;border:2px solid var(--candle);text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.walk{background:var(--candle);color:var(--on-candle)}
+.btn.back{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.hint{text-align:center;font-size:14px;color:var(--muted)}
+
+/* the room */
+.room[hidden]{display:none}
+.room{background:var(--panel);border-radius:28px;padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:20px;min-width:0;min-height:560px}
+.room .where{color:var(--candle)}
+.room .arch{width:150px;height:auto;aspect-ratio:4/5;max-width:100%;object-fit:cover;border-radius:999px 999px 18px 18px;display:block;border:3px solid var(--wall)}
+.room .arch.big{width:min(260px,70%)}
+.room .top{display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}
+.room .top > div{display:flex;flex-direction:column;gap:12px;flex:1 1 240px;min-width:0}
+.room h2{font-size:clamp(36px,5vw,58px);letter-spacing:-.01em}
+.room .lede{font-size:clamp(19px,2vw,22px);line-height:1.5}
+.room .muted{color:var(--muted)}
+.room ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.room ul.plain li{display:flex;flex-direction:column;gap:2px;padding-top:14px;border-top:1px solid var(--wall)}
+.room ul.plain li b{font-family:var(--display);font-weight:400;font-size:24px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}
+.facts div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.facts b{font-family:var(--mono);font-weight:500;font-size:clamp(20px,2.6vw,26px);font-variant-numeric:tabular-nums}
+.facts span{font-size:15px;color:var(--muted);line-height:1.35}
+blockquote{margin:0;font-family:var(--display);font-size:clamp(22px,2.4vw,27px);line-height:1.35;padding-left:18px;border-left:3px solid var(--candle)}
+.poem{font-family:var(--display);font-size:20px;line-height:1.55;white-space:pre-line}
+.prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.price{border:1.5px solid var(--wall);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.price.pop{border-color:var(--candle)}
+.price b{font-family:var(--mono);font-weight:500;font-size:22px;font-variant-numeric:tabular-nums}
+.price span{font-size:14px;color:var(--muted)}
+.small{font-size:14px;color:var(--muted)}
+.links{display:flex;gap:10px 20px;flex-wrap:wrap;font-weight:700}
+.path{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:16px}
+.path dt{font-family:var(--mono);color:var(--candle);font-variant-numeric:tabular-nums}
+.path dd{margin:0;color:var(--muted)}
+.mailrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mailrow code{font-family:var(--mono);font-size:16px;background:var(--bg);padding:10px 14px;border-radius:12px;user-select:all;overflow-wrap:anywhere}
+.mini{font-weight:700;font-size:14px;border:1.5px solid var(--candle);color:var(--ink);background:transparent;border-radius:999px;padding:8px 14px;cursor:pointer}
+form.join{display:flex;gap:10px;flex-wrap:wrap}
+form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;border:1.5px solid var(--wall);background:var(--bg);color:var(--ink);padding:12px 18px}
+.note{font-size:14px;color:var(--muted);min-height:1.4em}
+.sr{position:absolute;left:-9999px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;background:var(--panel);padding:8px 12px;border-radius:8px}
+
+@media (max-width:860px){
+  .page{grid-template-columns:minmax(0,1fr);gap:20px}
+  .maze{position:static}
+  .maze svg{max-width:340px}
+  .room{min-height:0}
+}
+@media (max-width:420px){ .facts,.prices{grid-template-columns:1fr} }
+</style>
+
+</head>
+<body>
+<a class="skip" href="#rooms">Skip to the content</a>
+<div class="page">
+  <aside class="maze" aria-label="The labyrinth">
+    <header><b>Michael Ender</b><span class="mono" id="stepLabel">At the gate</span></header>
+    <svg id="maze" viewBox="-300 -300 600 600" role="img" aria-label="A round labyrinth with five rings and a center. Each ring is one part of Michael's life."></svg>
+    <nav aria-label="Walk the labyrinth">
+      <button class="btn back" id="back" type="button">← Turn back</button>
+      <button class="btn walk" id="walk" type="button">Walk on →</button>
+    </nav>
+    <p class="hint">Five turns to the center. Tap a ring to jump there, or use the arrow keys.</p>
+  </aside>
+
+  <main id="rooms">
+    <section class="room" data-step="0" id="gate">
+      <span class="mono where">The gate</span>
+      <h2>Walk to the center to meet me.</h2>
+      <p class="lede">I'm Michael. I write, I build, I play and coach tournament poker, and I bring people together. Each turn of this labyrinth is one part of my life. In the center, we meet.</p>
+      <div class="facts">
+        <div><b>~$4M</b><span>in tournament cashes, including the Sunday Million</span></div>
+        <div><b>2</b><span>AI apps live, built in 2026</span></div>
+        <div><b>1</b><span>book in progress, and a drawer full of poems</span></div>
+        <div><b>5</b><span>languages: English, French, Dutch, Hebrew, Spanish</span></div>
+      </div>
+      <p class="muted">In a hurry? <a href="#center" data-go="6">Go straight to the center</a>.</p>
+    </section>
+
+    <section class="room" data-step="1" id="story" hidden>
+      <div class="top"><img class="arch" src="img/story.jpg" alt="Michael looking up, in soft evening light" width="640" height="800"><div><span class="mono where">First turn · Story</span>
+      <h2>How I got here</h2></div></div>
+      <p class="lede">My first big cash came in 2006 in Hong Kong: a three-dollar rebuy tournament on PokerStars, and I was chip leader. A few years later I stood in the sun in Juárez, Mexico, waiting for trucks of scrap metal to load and sharing cigarettes with the workers. Then Antwerp and the family diamond business, then Brussels, trying to bring some soul to the party scene with festivals and a community of 200 people.</p>
+      <p>At thirty-four I was lying on my couch in Antwerp on a grey Wednesday, asking what I was doing with my life. That question became a book. The answer, so far, is people. Every chapter was about bringing them together, and it still is.</p>
+      <dl class="path" aria-label="The path">
+        <dt>2003</dt><dd>Israel, army service</dd>
+        <dt>2005</dt><dd>Shanghai, Mandarin at Fudan University</dd>
+        <dt>2006</dt><dd>Hong Kong, business degree at HKU</dd>
+        <dt>2009</dt><dd>Mexico, built a metals buying operation from zero</dd>
+        <dt>2011</dt><dd>Antwerp, diamonds: revenue from €5M to €10M</dd>
+        <dt>2017</dt><dd>Brussels, events, festivals and Résidence L</dd>
+        <dt>2022</dt><dd>The tables, tournament pro and coach</dd>
+        <dt>Now</dt><dd>Koh Phangan, circles, writing, building with AI</dd>
+      </dl>
+    </section>
+
+    <section class="room" data-step="2" id="building" hidden>
+      <div class="top"><img class="arch" src="img/building.jpg" alt="Michael leaning against a tree trunk at dusk" width="640" height="800"><div><span class="mono where">Second turn · Building</span>
+      <h2>Tools for people who don't fit in one box</h2></div></div>
+      <p class="lede">I started building with AI in 2026. Two apps are live, and both come from problems I lived myself.</p>
+      <ul class="plain">
+        <li><b>Generalist Compass</b><span class="muted">For people with mixed careers. It reads your story, finds the thread, and shows you companies that need what you've already done. Recruiters describe a problem, not a job title.</span><a href="https://generalist-compass.vercel.app" target="_blank" rel="noopener">Open Generalist Compass →</a></li>
+        <li><b>Table Ready</b><span class="muted">The reality check for tournament players: should you play today, what variance really looks like at your stakes, a tilt reset, and someone to talk to after a bad beat.</span><a href="https://table-ready-eosin.vercel.app" target="_blank" rel="noopener">Open Table Ready →</a></li>
+      </ul>
+    </section>
+
+    <section class="room" data-step="3" id="writing" hidden>
+      <div class="top"><img class="arch" src="img/writing.jpg" alt="Michael sitting on rocks, deep in thought" width="640" height="800"><div><span class="mono where">Third turn · Writing</span>
+      <h2>A book, a Substack, and poems in between</h2></div></div>
+      <p class="lede"><em>Open Your I's</em> is a book about a conversation with the part of me that already knew. Stories from trading floors, festivals and poker tables, and the self-inquiry that tied them together.</p>
+      <blockquote>“When you talk to me, you talk to yourself and the whole universe.”</blockquote>
+      <p class="poem">We are here for someday and now for love.
+Words are just words,
+no meaning but reason to viral for satire
+and silent enough for flowers.</p>
+      <p class="small">From “Something is pushing me to write”.</p>
+      <div class="links">
+        <a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Read my Substack →</a>
+        <a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">My poems on All Poetry →</a>
+        <a href="#center" data-go="6">Get the first chapter when it's out →</a>
+      </div>
+    </section>
+
+    <section class="room" data-step="4" id="poker" hidden>
+      <div class="top"><img class="arch" src="img/poker.jpg" alt="Michael at a poker table in a hoodie, black and white" width="640" height="800"><div><span class="mono where">Fourth turn · The Poker Monk</span>
+      <h2>Tournament poker, from a quiet mind</h2></div></div>
+      <p class="lede">I play MTTs on GGPoker, ACR and CoinPoker. Sunday Million winner, SCOOP and WCOOP final tables. Trained under BBZ (Jordan Drummond) and Enrico Camosci. I coach strategy and the mental game on Zoom, with Discord access. The first intro call is free.</p>
+      <div class="prices">
+        <div class="price"><span>Single session</span><b>$120</b><span>75 to 90 minutes</span></div>
+        <div class="price pop"><span>The Package</span><b>$500</b><span>5 sessions · most popular</span></div>
+        <div class="price"><span>The Program</span><b>$800</b><span>10 sessions</span></div>
+        <div class="price"><span>Mystery Package</span><b>Let's talk</b><span>Built around you</span></div>
+      </div>
+      <div class="links"><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">See coaching on The Poker Monk site →</a></div>
+      <p class="small">Results vary by player and effort. I don't promise to fix a game in five sessions.</p>
+    </section>
+
+    <section class="room" data-step="5" id="circles" hidden>
+      <div class="top"><img class="arch" src="img/circles.jpg" alt="Michael on a beach at sunset on Koh Phangan" width="640" height="800"><div><span class="mono where">Fifth turn · Circles</span>
+      <h2>Bringing people together</h2></div></div>
+      <p class="lede">The thread through everything I do.</p>
+      <ul class="plain">
+        <li><b>The Drop Circle</b><span class="muted">A weekly fire circle at The Source on Koh Phangan, every Wednesday. Back after the season break, from the end of November.</span></li>
+        <li><b>The Drop</b><span class="muted">An immersive retreat in the making: a few days to drop the noise, meet real people and come back to yourself.</span><a id="dropLink" href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">Visit The Drop →</a></li>
+        <li><b>Résidence L and festivals</b><span class="muted">A community and events brand in Brussels with about 200 members, and festivals like Dhamar Tal with about 700 guests.</span></li>
+      </ul>
+    </section>
+
+    <section class="room" data-step="6" id="center" hidden>
+      <div class="top"><img class="arch big" src="img/center.jpg" alt="Michael Ender in a black hat, looking into the camera" width="640" height="800"><div><span class="mono where">The center</span>
+      <h2>You made it. Let's meet.</h2></div></div>
+      <p class="lede">Coaching, a project, a role, or an idea you want to build. Write me a line and we'll find a time.</p>
+      <div class="mailrow"><code id="mail">endermike@gmail.com</code><button class="mini" id="copyMail" type="button">Copy</button></div>
+      <p class="note" id="copyNote" role="status"></p>
+      <h3 style="font-size:28px;margin-top:8px">Or follow the journey</h3>
+      <p class="muted">One letter, now and then: new chapters, new tools, and what I'm learning about poker, people and building with AI.</p>
+      <form class="join" id="joinForm" novalidate>
+        <label for="joinEmail" class="sr">Your email</label>
+        <input id="joinEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        <button class="btn walk" type="submit">Join</button>
+      </form>
+      <p class="note" id="joinNote" role="status"></p>
+      <div class="links"><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram</a></div>
+      <p class="small">Antwerp · Koh Phangan · © 2026 Michael Ender</p>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  const NS = "http://www.w3.org/2000/svg", svg = document.getElementById("maze");
+  const NAMES = ["The gate","Story","Building","Writing","Poker","Circles","The center"];
+  const IDS = ["gate","story","building","writing","poker","circles","center"];
+  const RINGS = 5, R = 262, STEP = 44;
+  const wallR = k => R - k * STEP;
+  const pathR = k => R - k * STEP - STEP / 2;
+  const gap = k => (k % 2 === 0 ? Math.PI / 2 : -Math.PI / 2);   // openings alternate bottom, top
+  const dir = k => (k % 2 === 0 ? 1 : -1);                          // walking direction alternates
+  const pt = (r, a) => [r * Math.cos(a), r * Math.sin(a)];
+  const el = (t, a, parent) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (parent || svg).append(e); return e; };
+  const stationAngle = k => gap(k) + dir(k) * Math.PI / 2;
+  const station = s => s === 0 ? [0, R + 26] : s === 6 ? [0, 0] : pt(pathR(s - 1), stationAngle(s - 1));
+
+  function arcPts(pts, r, a0, a1){ const n = Math.max(6, Math.ceil(Math.abs(a1 - a0) * r / 8)); for (let i = 0; i <= n; i++) pts.push(pt(r, a0 + (a1 - a0) * i / n)); }
+  function leg(s){
+    const pts = [];
+    if (s === 0){ pts.push(station(0)); arcPts(pts, pathR(0), gap(0), stationAngle(0)); return pts; }
+    const k = s - 1, a0 = stationAngle(k), target = gap(k + 1);
+    let a1 = target;  // continue in walking direction to the next opening
+    if (dir(k) > 0){ while (a1 < a0) a1 += 2 * Math.PI; } else { while (a1 > a0) a1 -= 2 * Math.PI; }
+    arcPts(pts, pathR(k), a0, a1);
+    if (k + 1 < RINGS){ const b0 = a1, b1 = b0 + dir(k + 1) * Math.PI / 2; arcPts(pts, pathR(k + 1), b0, b1); }
+    else pts.push([0, 0]);
+    return pts;
+  }
+  function route(from, to){
+    let pts = [];
+    if (to > from) for (let s = from; s < to; s++) pts = pts.concat(leg(s));
+    else for (let s = from - 1; s >= to; s--) pts = pts.concat(leg(s).slice().reverse());
+    return pts.length ? pts : [station(from)];
+  }
+
+  // draw the labyrinth
+  for (let k = 0; k < RINGS; k++) el("circle", {cx:0, cy:0, r:pathR(k), class:"ring"});
+  const trail = el("polyline", {class:"trail", points:""});
+  for (let k = 0; k <= RINGS; k++){
+    const r = wallR(k), a = gap(k), w = 16 / r * 1.6 + 0.06;
+    const [x1, y1] = pt(r, a + w), [x2, y2] = pt(r, a - w + 2 * Math.PI);
+    el("path", {class:"wall", d:`M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 1 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`});
+  }
+  el("circle", {cx:0, cy:0, r:wallR(RINGS) - 12, class:"heart"});
+  for (let k = 0; k < RINGS; k++){
+    // label on the upper half of each ring so it always reads left to right
+    const r = pathR(k) - 4, a0 = -Math.PI * 0.86, a1 = -Math.PI * 0.14, id = "lp" + k;
+    const [ax, ay] = pt(r, a0), [bx, by] = pt(r, a1);
+    el("path", {id, d:`M ${ax.toFixed(2)} ${ay.toFixed(2)} A ${r} ${r} 0 0 1 ${bx.toFixed(2)} ${by.toFixed(2)}`, fill:"none"});
+    const t = el("text", {class:"lab", "data-go":String(k + 1), dy:"4", tabindex:"0", role:"button", "aria-label":"Go to " + NAMES[k + 1], "text-anchor":"middle"});
+    const tp = el("textPath", {href:"#" + id, startOffset:"50%"}, t); tp.textContent = NAMES[k + 1];
+  }
+  const stones = [];
+  for (let s = 0; s <= 6; s++){ const [x, y] = station(s); stones.push(el("circle", {cx:x, cy:y, r: s === 6 ? 8 : 5, class:"stone"})); }
+  const glow = el("circle", {r:22, class:"glow"});
+  const walker = el("circle", {r:9, class:"walker"});
+
+  let cur = 0, anim = 0; const seen = new Set([0]);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function place([x, y]){ walker.setAttribute("cx", x); walker.setAttribute("cy", y); glow.setAttribute("cx", x); glow.setAttribute("cy", y); }
+  function show(s){
+    document.querySelectorAll(".room").forEach(r => r.hidden = Number(r.dataset.step) !== s);
+    document.getElementById("stepLabel").textContent = s === 0 ? "At the gate" : s === 6 ? "In the center" : "Turn " + s + " of 5";
+    document.getElementById("back").disabled = s === 0;
+    document.getElementById("walk").textContent = s === 6 ? "Back to the gate ↺" : "Walk on →";
+    document.querySelectorAll(".lab").forEach(l => l.classList.toggle("here", Number(l.dataset.go) === s));
+    stones.forEach((st, i) => st.classList.toggle("seen", seen.has(i)));
+    try { history.replaceState(null, "", "#" + IDS[s]); } catch(e){}
+  }
+  function go(to){
+    if (to === cur) return;
+    const pts = route(cur, to); cancelAnimationFrame(anim);
+    for (let s = Math.min(cur, to); s <= Math.max(cur, to); s++) seen.add(s);
+    trail.setAttribute("points", pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "));
+    cur = to; show(to);
+    if (innerWidth <= 860) document.getElementById("rooms").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+    if (reduce || pts.length < 2){ place(pts[pts.length - 1]); return; }
+    const t0 = performance.now(), dur = Math.min(2200, 500 + pts.length * 9);
+    const tick = now => { const p = Math.min(1, (now - t0) / dur), e = p < .5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2) / 2; place(pts[Math.min(pts.length - 1, Math.round(e * (pts.length - 1)))]); if (p < 1) anim = requestAnimationFrame(tick); };
+    anim = requestAnimationFrame(tick);
+  }
+  document.getElementById("walk").onclick = () => go(cur === 6 ? 0 : cur + 1);
+  document.getElementById("back").onclick = () => { if (cur > 0) go(cur - 1); };
+  document.addEventListener("click", e => { const t = e.target.closest("[data-go]"); if (t){ e.preventDefault(); go(Number(t.getAttribute("data-go"))); } });
+  document.addEventListener("keydown", e => {
+    if (e.target.matches && e.target.matches("input,textarea")) return;
+    if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("lab")){ e.preventDefault(); go(Number(e.target.getAttribute("data-go"))); return; }
+    if (e.key === "ArrowRight" || e.key === "ArrowDown"){ if (cur < 6){ e.preventDefault(); go(cur + 1); } }
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp"){ if (cur > 0){ e.preventDefault(); go(cur - 1); } }
+  });
+  const start = Math.max(0, IDS.indexOf((location.hash || "").slice(1)));
+  cur = start; for (let s = 0; s <= start; s++) seen.add(s); place(station(start)); show(start);
+
+  const mail = document.getElementById("mail"), note = document.getElementById("copyNote");
+  document.getElementById("copyMail").onclick = () => {
+    const sel = () => { const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); note.textContent = "Selected. Press copy on your keyboard."; };
+    try { navigator.clipboard.writeText(mail.textContent).then(() => note.textContent = "Copied.", sel); } catch(err){ sel(); }
+  };
+  document.getElementById("joinForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const inp = document.getElementById("joinEmail"), n = document.getElementById("joinNote"), v = inp.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ n.textContent = "That email doesn't look right. Check it and try again."; return; }
+    try { const r = await fetch("/api/subscribe", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({email: v})}); if (!r.ok) throw 0; n.textContent = "You're on the list. Thank you."; inp.value = ""; }
+    catch(err){ n.textContent = "Signups open when the site is live. For now, write to the address above."; }
+  });
+})();
+</script>
+
+</body>
+</html>
