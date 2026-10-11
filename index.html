@@ -147,9 +147,26 @@ details.cv .cvbody{display:flex;flex-direction:column;gap:16px;padding-top:14px}
 
 /* fireflies hidden in the rooms */
 .catch{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border:0;padding:0;background:transparent;cursor:pointer;z-index:3;animation:none}
-.catch::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#FFE3A6;box-shadow:0 0 8px #F2B653,0 0 18px #E3793F;animation:blink 2.4s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:.25;transform:translate(0,0) scale(.8)}50%{opacity:1;transform:translate(3px,-4px) scale(1.15)}}
+.catch::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFE3A6;box-shadow:0 0 8px #F2B653,0 0 18px #E3793F;animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.35;transform:translate(0,0) scale(.8)}50%{opacity:1;transform:translate(3px,-4px) scale(1.25)}}
+.catch{animation:drift 9s ease-in-out infinite}
+@keyframes drift{0%,100%{translate:0 0}25%{translate:14px -10px}50%{translate:-6px -18px}75%{translate:-14px 4px}}
+.jar.near{color:var(--candle)}
+.jar.near i:not(.on){animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{border-color:var(--candle);box-shadow:0 0 8px rgba(242,182,83,.6)}}
 .flying{position:fixed;width:10px;height:10px;border-radius:50%;background:#FFE3A6;box-shadow:0 0 10px #F2B653,0 0 22px #E3793F;z-index:50;pointer-events:none;transition:left .9s cubic-bezier(.5,0,.3,1),top .9s cubic-bezier(.3,0,.5,1),transform .9s}
+
+/* the fire: names and words left by visitors */
+.fire{position:relative;border-radius:22px;padding:22px 20px 20px;background:radial-gradient(ellipse 60% 70% at 50% 100%,rgba(227,121,63,.28),rgba(242,182,83,.06) 55%,transparent 80%),rgba(0,0,0,.25);border:1px solid rgba(242,182,83,.2);display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.fire h3{font-size:24px}
+.sparks{display:flex;flex-wrap:wrap;gap:8px 10px;justify-content:center;min-height:40px}
+.spark{font-size:15px;padding:5px 12px;border-radius:999px;background:rgba(242,182,83,.08);border:1px solid rgba(242,182,83,.25);animation:flicker 4s ease-in-out infinite}
+.spark b{font-weight:500;color:var(--muted)}
+.spark em{font-style:normal;font-family:var(--display);color:var(--candle);font-size:17px}
+.spark.mine{border-color:var(--candle);box-shadow:0 0 14px rgba(242,182,83,.35)}
+@keyframes flicker{0%,100%{opacity:1}45%{opacity:.75}55%{opacity:.95}}
+form.addfire{display:flex;gap:8px;flex-wrap:wrap}
+form.addfire input{flex:1 1 130px;min-width:0;font:inherit;font-size:16px;border-radius:999px;border:1.5px solid rgba(242,182,83,.4);background:rgba(0,0,0,.35);color:var(--ink);padding:10px 16px}
 
 /* the center */
 .mailrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -200,7 +217,7 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
       <span class="mono where">Koh Phangan, Thailand</span>
       <h1 class="name">Michael <span>Ender</span></h1>
       <p class="invite">Come in. Walk to the center and we'll meet.</p>
-      <p class="lede muted">I've traded diamonds and scrap metal, thrown parties in Brussels and played poker for a living. These days I write, build small tools with AI and sit around fires with people. Five turns, one for each, and a seat by the fire in the middle.</p>
+      <p class="lede muted">I've traded diamonds and scrap metal, organized events in Brussels and played poker for a living. These days I write, build small tools with AI and sit around fires with people. Five turns, one for each, and a seat by the fire in the middle.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn walk" type="button" data-go="1">Enter the labyrinth →</button></div>
       <p class="muted">Five fireflies are hiding along the way. Catch them all and something opens in the center.</p>
       <p class="small">In a hurry? <a href="#center" data-go="6">Go straight to the center</a>, or say hi on Instagram: <a href="https://instagram.com/phanteidos1" target="_blank" rel="noopener">@phanteidos1</a>.</p>
@@ -209,7 +226,7 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
     <section class="room" data-step="1" id="story" hidden>
       <div class="top"><img class="photo" src="img/story.jpg" alt="Michael looking up, in soft evening light" width="640" height="800"><div><span class="mono where">First turn · Story</span>
       <h2>How I got here</h2></div></div>
-      <p class="lede">My first big cash came in 2006 in Hong Kong: a three-dollar rebuy tournament on PokerStars. A few years later I stood in the sun in Juárez, Mexico, waiting for trucks of scrap metal to load and sharing cigarettes with the workers. Then Antwerp and the family diamond business, then Brussels and the party scene.</p>
+      <p class="lede">My first big cash came in 2006 in Hong Kong: a three-dollar rebuy tournament on PokerStars. A few years later I stood in the sun in Juárez, Mexico, waiting for trucks of scrap metal to load and sharing cigarettes with the workers. Then Antwerp and the family diamond business, then Brussels and events.</p>
       <p>At thirty-four I was lying on my couch in Antwerp on a grey Wednesday, asking what I was doing with my life. That question became a book. The answer, so far, is people. Every chapter was about bringing them together, and it still is.</p>
       <div class="turn" data-q="story">
         <h3>Your turn: what's your couch question?</h3>
@@ -308,7 +325,7 @@ and silent enough for flowers.</p>
       <ul class="plain">
         <li><b>The Drop Circle</b><span class="muted">A fire circle at The Source on Koh Phangan, every Wednesday. Back after the season break, from the end of November.</span></li>
         <li><b>The Drop</b><span class="muted">A retreat in the making: a few days to drop the noise, meet real people and come back to yourself.</span><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">Visit The Drop →</a></li>
-        <li><b>Brussels, before all this</b><span class="muted">Years of festivals and Résidence L. What stayed with me were the people, not the parties.</span></li>
+        <li><b>Brussels, before all this</b><span class="muted">Years of festivals and Résidence L. What stayed with me were the people, not the events.</span></li>
       </ul>
       <div class="turn" data-q="circles">
         <h3>Your turn: what do you bring to a fire?</h3>
@@ -319,6 +336,17 @@ and silent enough for flowers.</p>
           <button class="opt" type="button" data-a="Silence">Silence</button>
         </div>
         <p class="reply" aria-live="polite"></p>
+      </div>
+      <div class="fire">
+        <h3>Leave something at the fire</h3>
+        <p class="muted" style="font-size:16px">Your first name and one word for whoever walks here next. These are the people who came before you.</p>
+        <div class="sparks" id="sparks" aria-live="polite"></div>
+        <form class="addfire" id="fireForm" novalidate>
+          <label for="fireName" class="sr">Your first name</label><input id="fireName" maxlength="24" placeholder="First name" autocomplete="given-name">
+          <label for="fireWord" class="sr">One word</label><input id="fireWord" maxlength="24" placeholder="One word">
+          <button class="btn walk" type="submit">Add to the fire</button>
+        </form>
+        <p class="note" id="fireNote" role="status"></p>
       </div>
     </section>
 
@@ -430,7 +458,8 @@ and silent enough for flowers.</p>
     document.getElementById("walk").textContent = s === 6 ? "Back to the gate ↺" : "Walk on →";
     document.querySelectorAll(".lab").forEach(l => l.classList.toggle("here", Number(l.dataset.go) === s));
     stones.forEach((st, i) => st.classList.toggle("seen", seen.has(i)));
-    placeFirefly(s);
+    placeFirefly(s); renderJar();
+    if (s === 5) loadFire();
     if (s === 6) renderWalk();
     try { history.replaceState(null, "", s === 0 ? location.pathname : "#" + IDS[s]); } catch(e){}
   }
@@ -458,7 +487,8 @@ and silent enough for flowers.</p>
 
   // fireflies: one hides in each of the five rooms
   const jarDots = document.querySelectorAll(".jar i");
-  function renderJar(){ jarDots.forEach((d, i) => d.classList.toggle("on", i < state.flies.length)); document.getElementById("jarText").textContent = state.flies.length === 5 ? "All five caught" : "Fireflies caught"; }
+  function renderJar(){ document.querySelector(".jar").classList.toggle("near", cur >= 1 && cur <= 5 && !state.flies.includes(cur)); if (cur >= 1 && cur <= 5 && !state.flies.includes(cur)) { document.getElementById("jarText").textContent = "A firefly is hiding in this room"; } else { renderJarText(); } jarDots.forEach((d, i) => d.classList.toggle("on", i < state.flies.length)); }
+  function renderJarText(){ document.getElementById("jarText").textContent = state.flies.length === 5 ? "All five caught" : "Fireflies caught"; }
   function placeFirefly(s){
     document.querySelectorAll(".catch").forEach(c => c.remove());
     if (s < 1 || s > 5 || state.flies.includes(s)) return;
@@ -519,6 +549,40 @@ and silent enough for flowers.</p>
     this.textContent = "Flip again"; state.answers.poker = end; store.set(state);
   };
 
+  // the fire: shared with everyone who walks here
+  const sparks = document.getElementById("sparks"), fireNote = document.getElementById("fireNote");
+  let fireItems = null;
+  function drawFire(){
+    sparks.textContent = "";
+    const items = (fireItems || []).slice(0, 40);
+    if (state.fire && !items.some(i => i.name === state.fire.name && i.word === state.fire.word)) items.unshift(state.fire);
+    items.forEach((it, i) => {
+      const sp = document.createElement("span"); sp.className = "spark" + (state.fire && it.name === state.fire.name && it.word === state.fire.word ? " mine" : "");
+      sp.style.animationDelay = (-(i * 0.7) % 4).toFixed(1) + "s";
+      const b = document.createElement("b"); b.textContent = it.name + " "; const e = document.createElement("em"); e.textContent = it.word;
+      sp.append(b, e); sparks.append(sp);
+    });
+    if (!items.length) sparks.innerHTML = '<span class="small">Nobody yet. You could be the first.</span>';
+  }
+  async function loadFire(){
+    if (fireItems) return drawFire();
+    try { const r = await fetch("/api/fire", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({action:"list"})}); if (!r.ok) throw 0; fireItems = (await r.json()).items || []; }
+    catch(e){ fireItems = []; fireNote.textContent = "The fire is shared once the site is live. For now, what you add stays on this device."; }
+    drawFire();
+  }
+  document.getElementById("fireForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = document.getElementById("fireName").value.trim(), word = document.getElementById("fireWord").value.trim();
+    if (!name || word.length < 2){ fireNote.textContent = "Add your first name and one word."; return; }
+    try {
+      const r = await fetch("/api/fire", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({action:"add", name, word})});
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok){ fireNote.textContent = d.error || "The fire is having trouble. Try again in a minute."; if (r.status !== 503) return; throw 0; }
+      state.fire = d.item; fireItems = [d.item].concat(fireItems || []); fireNote.textContent = "Thank you. Your word is at the fire now.";
+    } catch(err){ state.fire = {name: name.slice(0, 24), word: word.slice(0, 24)}; fireNote.textContent = "Saved on this device. The fire is shared once the site is live."; }
+    store.set(state); document.getElementById("fireName").value = ""; document.getElementById("fireWord").value = ""; drawFire();
+  });
+
   // the center: what you left along the way
   function renderWalk(){
     const a = state.answers, box = document.getElementById("yourWalk"), lines = [];
@@ -527,6 +591,7 @@ and silent enough for flowers.</p>
     if (a.writing) lines.push("A question you took home: <b>" + a.writing + "</b>");
     if (typeof a.poker === "number") lines.push("Your 100 flips: <b>" + (a.poker > 0 ? "+" : "") + a.poker + "</b>");
     if (a.circles) lines.push("You bring to the fire: <b>" + a.circles + "</b>");
+    if (state.fire) lines.push("You left at the fire: <b>" + state.fire.word.replace(/[<>&"]/g, "") + "</b>");
     box.hidden = !lines.length;
     box.innerHTML = lines.length ? '<span class="mono where">Your walk</span>' + lines.map(l => "<p>" + l + "</p>").join("") + '<p>Tell me about any of it when you write.</p>' : "";
     document.getElementById("gift").hidden = state.flies.length < 5;
