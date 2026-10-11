@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080B09">
 <meta property="og:title" content="Michael Ender">
-<meta property="og:description" content="Writer, builder, tournament poker pro and coach. Walk the labyrinth to the center to meet me.">
+<meta property="og:description" content="Walk the labyrinth to the center and we'll meet. Writing, building, poker and circles, from Koh Phangan.">
 <meta property="og:image" content="/img/center.jpg">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
 <script defer src="/_vercel/insights/script.js"></script>
 <title>Michael Ender</title>
-<meta name="description" content="Michael Ender: writer, builder, tournament poker pro and coach. Walk the labyrinth to the center to meet him.">
+<meta name="description" content="Michael Ender: writing, building, poker and circles, from Koh Phangan. Walk the labyrinth to the center and we'll meet.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
@@ -24,6 +24,7 @@
   --muted:#A6AE99;
   --wall:#C9933A;      /* walls drawn in lantern light */
   --path:rgba(242,182,83,.05);
+  --path-lit:rgba(242,182,83,.13);
   --candle:#F2B653;
   --ember:#E3793F;
   --clay:#F2A57C;
@@ -34,9 +35,8 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 body{background:radial-gradient(ellipse 70% 60% at 30% 40%,#152014 0%,var(--bg) 70%) fixed,var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;margin:0;padding-inline:20px}
-#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;animation:fade 3s ease .8s both}
 #lantern{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:radial-gradient(circle,rgba(242,182,83,.10) 0%,rgba(242,182,83,.04) 35%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-999px,-999px);transition:transform .25s ease-out}
 .page{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding-block:18px 40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
 a{color:var(--clay);text-underline-offset:3px}
@@ -45,6 +45,12 @@ button,a{font-family:inherit}
 h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.05;text-wrap:balance}
 p{margin:0}
 .mono{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* the opening: darkness, one flame, then the walls catch the light */
+@keyframes ignite{0%{opacity:0;transform:scale(.2)}40%{opacity:1;transform:scale(1.5)}100%{opacity:1;transform:scale(1)}}
+.maze svg .walker,.maze svg .glow-wrap{transform-box:fill-box;transform-origin:center;animation:ignite 1.3s ease-out .3s both}
+.late{animation:fade 1.2s ease 2.6s both}
 
 /* the labyrinth */
 .maze{min-width:0;position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);display:flex;flex-direction:column;gap:14px}
@@ -53,11 +59,12 @@ p{margin:0}
 body.at-gate .maze header b{opacity:0}
 .maze header span{color:var(--muted)}
 .maze svg{width:100%;max-width:560px;height:auto;display:block;margin:0 auto;overflow:visible}
-.maze svg .wall{fill:none;stroke:var(--wall);stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(242,182,83,.55));stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s cubic-bezier(.6,.1,.2,1) forwards}
-.maze svg .wall:nth-of-type(2){animation-delay:.15s}.maze svg .wall:nth-of-type(3){animation-delay:.3s}.maze svg .wall:nth-of-type(4){animation-delay:.45s}.maze svg .wall:nth-of-type(5){animation-delay:.6s}.maze svg .wall:nth-of-type(6){animation-delay:.75s}
+.maze svg .wall{fill:none;stroke:var(--wall);stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(242,182,83,.55));stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s cubic-bezier(.6,.1,.2,1) forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
-.maze svg .ring{fill:none;stroke:var(--path);stroke-width:30}
-.maze svg .trail{fill:none;stroke:var(--candle);stroke-width:2.5;stroke-dasharray:1.5 8;stroke-linecap:round;opacity:.9;filter:drop-shadow(0 0 3px rgba(242,182,83,.8))}
+.maze svg .ring{fill:none;stroke:var(--path);stroke-width:30;transition:stroke 1.2s}
+.maze svg .ring.lit{stroke:var(--path-lit)}
+.maze svg .walked{fill:none;stroke:var(--candle);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.55;filter:drop-shadow(0 0 4px rgba(242,182,83,.9))}
+.maze svg .trail{fill:none;stroke:#FFE3A6;stroke-width:2.5;stroke-dasharray:1.5 8;stroke-linecap:round;opacity:.9;filter:drop-shadow(0 0 3px rgba(242,182,83,.8))}
 .maze svg .lab{font-family:var(--mono);font-size:13px;letter-spacing:.2em;fill:var(--muted);text-transform:uppercase;cursor:pointer;transition:fill .3s}
 .maze svg .lab.here{fill:var(--candle);filter:drop-shadow(0 0 4px rgba(242,182,83,.9))}
 .maze svg .lab:hover{fill:var(--ink)}
@@ -73,19 +80,29 @@ body.at-gate .maze header b{opacity:0}
 .btn.back{background:rgba(8,11,9,.4);color:var(--ink)}
 .btn:disabled{opacity:.4;cursor:default}
 .hint{text-align:center;font-size:14px;color:var(--muted)}
+.jar{display:flex;justify-content:center;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.jar i{width:10px;height:10px;border-radius:50%;background:rgba(242,182,83,.15);border:1px solid rgba(242,182,83,.35);display:inline-block;transition:background .5s,box-shadow .5s}
+.jar i.on{background:#FFE3A6;box-shadow:0 0 8px #F2B653,0 0 16px #E3793F}
 
-/* the room */
-.room[hidden]{display:none}
-.room.gate{background:transparent;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;justify-content:center;padding-inline:4px}
+/* the room, lit like a candle */
+.room{position:relative;background:var(--panel);border:1px solid var(--panel-line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:28px;padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:20px;min-width:0;min-height:560px;animation:candle 1.4s ease-out both}
+.room::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at 12% 0%,rgba(242,182,83,.20),transparent 55%);animation:warm 2.2s ease-out both}
+.room > *{position:relative;animation:rise .7s ease both}
+.room > *:nth-child(2){animation-delay:.12s}.room > *:nth-child(3){animation-delay:.24s}.room > *:nth-child(4){animation-delay:.36s}.room > *:nth-child(5){animation-delay:.48s}.room > *:nth-child(n+6){animation-delay:.6s}
+@keyframes candle{0%{opacity:0}18%{opacity:.55}28%{opacity:.3}46%{opacity:.85}58%{opacity:.7}100%{opacity:1}}
+@keyframes warm{0%{opacity:0;transform:scale(.6);transform-origin:12% 0}35%{opacity:1}100%{opacity:.6;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.room.gate{background:transparent;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;justify-content:center;padding-inline:4px;animation:fade 1.6s ease 1.4s both}
+.room.gate::before{display:none}
+.room.gate > *{animation-delay:1.6s}.room.gate > *:nth-child(2){animation-delay:1.8s}.room.gate > *:nth-child(3){animation-delay:2.1s}.room.gate > *:nth-child(n+4){animation-delay:2.4s}
 .gate .name{font-family:var(--display);font-size:clamp(60px,8.5vw,112px);line-height:.9;letter-spacing:-.02em;margin:0}
 .gate .name span{display:block;color:var(--candle);text-shadow:0 0 28px rgba(242,182,83,.45)}
 .gate .invite{font-family:var(--display);font-size:clamp(24px,2.8vw,32px);line-height:1.25;color:var(--ink)}
-.room{animation:rise .7s ease both}
-@keyframes rise{from{transform:translateY(10px)}to{transform:none}}
-.room{background:var(--panel);border:1px solid var(--panel-line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:28px;padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:20px;min-width:0;min-height:560px}
 .room .where{color:var(--candle)}
-.room .arch{width:150px;height:auto;aspect-ratio:4/5;max-width:100%;object-fit:cover;border-radius:999px 999px 18px 18px;display:block;border:2px solid rgba(242,182,83,.55);box-shadow:0 0 30px rgba(242,182,83,.18)}
-.room .arch.big{width:min(260px,70%)}
+/* photos come out of the dark, no frame */
+.room .photo{width:150px;height:auto;aspect-ratio:4/5;max-width:100%;object-fit:cover;display:block;border-radius:22px;-webkit-mask-image:radial-gradient(ellipse 60% 62% at 50% 46%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 60% 62% at 50% 46%,#000 58%,transparent 100%);filter:sepia(.18) saturate(.9) brightness(.92);transition:filter .6s}
+.room .photo:hover{filter:sepia(.05) saturate(1) brightness(1.05)}
+.room .photo.big{width:min(260px,70%)}
 .room .top{display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}
 .room .top > div{display:flex;flex-direction:column;gap:12px;flex:1 1 240px;min-width:0}
 .room h2{font-size:clamp(36px,5vw,58px);letter-spacing:-.01em}
@@ -94,25 +111,54 @@ body.at-gate .maze header b{opacity:0}
 .room ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
 .room ul.plain li{display:flex;flex-direction:column;gap:2px;padding-top:14px;border-top:1px solid rgba(242,182,83,.18)}
 .room ul.plain li b{font-family:var(--display);font-weight:400;font-size:24px}
-.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}
-.facts div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.facts b{font-family:var(--mono);font-weight:500;font-size:clamp(20px,2.6vw,26px);font-variant-numeric:tabular-nums}
-.facts span{font-size:15px;color:var(--muted);line-height:1.35}
 blockquote{margin:0;font-family:var(--display);font-size:clamp(22px,2.4vw,27px);line-height:1.35;padding-left:18px;border-left:3px solid var(--candle)}
 .poem{font-family:var(--display);font-size:20px;line-height:1.55;white-space:pre-line}
 .prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .price{border:1.5px solid rgba(242,182,83,.22);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
-.price.pop{border-color:var(--candle)}
 .price b{font-family:var(--mono);font-weight:500;font-size:22px;font-variant-numeric:tabular-nums}
 .price span{font-size:14px;color:var(--muted)}
 .small{font-size:14px;color:var(--muted)}
 .links{display:flex;gap:10px 20px;flex-wrap:wrap;font-weight:700}
+
+/* the long version */
+details.cv{border-top:1px solid rgba(242,182,83,.18);padding-top:14px}
+details.cv summary{cursor:pointer;font-weight:700;color:var(--clay);list-style:none}
+details.cv summary::-webkit-details-marker{display:none}
+details.cv summary::before{content:"+ ";font-family:var(--mono)}
+details.cv[open] summary::before{content:"− "}
+details.cv .cvbody{display:flex;flex-direction:column;gap:16px;padding-top:14px}
 .path{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:16px}
 .path dt{font-family:var(--mono);color:var(--candle);font-variant-numeric:tabular-nums}
 .path dd{margin:0;color:var(--muted)}
+
+/* your turn: a small question in every room */
+.turn{border:1px dashed rgba(242,182,83,.35);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.turn h3{font-size:22px}
+.turn .opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:inherit;font-size:15px;font-weight:500;border:1.5px solid rgba(242,182,83,.45);color:var(--ink);background:rgba(0,0,0,.25);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .3s,border-color .3s}
+.opt:hover{border-color:var(--candle)}
+.opt.picked{background:var(--candle);color:var(--on-candle);border-color:var(--candle)}
+.reply{font-family:var(--display);font-size:20px;line-height:1.4;color:var(--candle);min-height:1.4em}
+.reply:not(:empty){animation:rise .6s ease both}
+.flips{display:flex;flex-direction:column;gap:8px}
+.flips svg{width:100%;height:90px;display:block}
+.flips svg .zero{stroke:rgba(166,174,153,.35);stroke-dasharray:3 4}
+.flips svg .run{fill:none;stroke:var(--candle);stroke-width:2;stroke-linejoin:round;filter:drop-shadow(0 0 3px rgba(242,182,83,.6))}
+
+/* fireflies hidden in the rooms */
+.catch{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border:0;padding:0;background:transparent;cursor:pointer;z-index:3;animation:none}
+.catch::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#FFE3A6;box-shadow:0 0 8px #F2B653,0 0 18px #E3793F;animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.25;transform:translate(0,0) scale(.8)}50%{opacity:1;transform:translate(3px,-4px) scale(1.15)}}
+.flying{position:fixed;width:10px;height:10px;border-radius:50%;background:#FFE3A6;box-shadow:0 0 10px #F2B653,0 0 22px #E3793F;z-index:50;pointer-events:none;transition:left .9s cubic-bezier(.5,0,.3,1),top .9s cubic-bezier(.3,0,.5,1),transform .9s}
+
+/* the center */
 .mailrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .mailrow code{font-family:var(--mono);font-size:16px;background:rgba(0,0,0,.35);padding:10px 14px;border-radius:12px;user-select:all;overflow-wrap:anywhere}
 .mini{font-weight:700;font-size:14px;border:1.5px solid var(--candle);color:var(--ink);background:transparent;border-radius:999px;padding:8px 14px;cursor:pointer}
+.yourwalk{display:flex;flex-direction:column;gap:6px;font-size:16px}
+.yourwalk p{color:var(--muted)}
+.yourwalk b{color:var(--ink);font-weight:500}
+.gift{border:1.5px solid var(--candle);border-radius:20px;padding:16px 18px;box-shadow:0 0 30px rgba(242,182,83,.2)}
 form.join{display:flex;gap:10px;flex-wrap:wrap}
 form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;border:1.5px solid rgba(242,182,83,.4);background:rgba(0,0,0,.35);color:var(--ink);padding:12px 18px}
 .note{font-size:14px;color:var(--muted);min-height:1.4em}
@@ -126,69 +172,93 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
   .maze svg{max-width:340px}
   .room{min-height:0}
 }
-@media (max-width:420px){ .facts,.prices{grid-template-columns:1fr} }
+@media (max-width:420px){ .prices{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .maze svg .wall{stroke-dashoffset:0}
+}
 </style>
 
 </head>
-<body>
+<body class="at-gate">
 <canvas id="sky" aria-hidden="true"></canvas><div id="lantern" aria-hidden="true"></div>
 <a class="skip" href="#rooms">Skip to the content</a>
 <div class="page">
   <aside class="maze" aria-label="The labyrinth">
-    <header><b>Michael Ender</b><span class="mono" id="stepLabel">At the gate</span></header>
+    <header class="late"><b>Michael Ender</b><span class="mono" id="stepLabel">At the gate</span></header>
     <svg id="maze" viewBox="-300 -300 600 600" role="img" aria-label="A round labyrinth with five rings and a center. Each ring is one part of Michael's life."></svg>
-    <nav aria-label="Walk the labyrinth">
+    <nav aria-label="Walk the labyrinth" class="late">
       <button class="btn back" id="back" type="button">← Turn back</button>
       <button class="btn walk" id="walk" type="button">Walk on →</button>
     </nav>
-    <p class="hint">Five turns to the center. Tap a ring to jump there, or use the arrow keys.</p>
+    <p class="jar late" aria-live="polite"><span id="jarText">Fireflies caught</span> <i></i><i></i><i></i><i></i><i></i></p>
+    <p class="hint late">Five turns to the center. Tap a ring to jump there, or use the arrow keys.</p>
   </aside>
 
   <main id="rooms">
     <section class="room gate" data-step="0" id="gate">
-      <span class="mono where">Writer · Builder · Poker pro · Connector</span>
+      <span class="mono where">Koh Phangan, Thailand</span>
       <h1 class="name">Michael <span>Ender</span></h1>
-      <p class="invite">Walk to the center of the labyrinth to meet me.</p>
-      <p class="lede muted">Each turn is one part of my life: the story, what I build, what I write, the tables, and the circles. In the center, we meet.</p>
+      <p class="invite">Come in. Walk to the center and we'll meet.</p>
+      <p class="lede muted">I've traded diamonds and scrap metal, thrown parties in Brussels and played poker for a living. These days I write, build small tools with AI and sit around fires with people. Five turns, one for each, and a seat by the fire in the middle.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn walk" type="button" data-go="1">Enter the labyrinth →</button></div>
-      <div class="facts">
-        <div><b>~$4M</b><span>in tournament cashes, including the Sunday Million</span></div>
-        <div><b>2</b><span>AI apps live, built in 2026</span></div>
-        <div><b>1</b><span>book in progress, and a drawer full of poems</span></div>
-        <div><b>5</b><span>languages: English, French, Dutch, Hebrew, Spanish</span></div>
-      </div>
-      <p class="muted">In a hurry? <a href="#center" data-go="6">Go straight to the center</a>. Or follow me on Instagram: <a href="https://instagram.com/phanteidos1" target="_blank" rel="noopener">@phanteidos1</a>.</p>
+      <p class="muted">Five fireflies are hiding along the way. Catch them all and something opens in the center.</p>
+      <p class="small">In a hurry? <a href="#center" data-go="6">Go straight to the center</a>, or say hi on Instagram: <a href="https://instagram.com/phanteidos1" target="_blank" rel="noopener">@phanteidos1</a>.</p>
     </section>
 
     <section class="room" data-step="1" id="story" hidden>
-      <div class="top"><img class="arch" src="img/story.jpg" alt="Michael looking up, in soft evening light" width="640" height="800"><div><span class="mono where">First turn · Story</span>
+      <div class="top"><img class="photo" src="img/story.jpg" alt="Michael looking up, in soft evening light" width="640" height="800"><div><span class="mono where">First turn · Story</span>
       <h2>How I got here</h2></div></div>
-      <p class="lede">My first big cash came in 2006 in Hong Kong: a three-dollar rebuy tournament on PokerStars, and I was chip leader. A few years later I stood in the sun in Juárez, Mexico, waiting for trucks of scrap metal to load and sharing cigarettes with the workers. Then Antwerp and the family diamond business, then Brussels, trying to bring some soul to the party scene with festivals and a community of 200 people.</p>
+      <p class="lede">My first big cash came in 2006 in Hong Kong: a three-dollar rebuy tournament on PokerStars. A few years later I stood in the sun in Juárez, Mexico, waiting for trucks of scrap metal to load and sharing cigarettes with the workers. Then Antwerp and the family diamond business, then Brussels and the party scene.</p>
       <p>At thirty-four I was lying on my couch in Antwerp on a grey Wednesday, asking what I was doing with my life. That question became a book. The answer, so far, is people. Every chapter was about bringing them together, and it still is.</p>
-      <dl class="path" aria-label="The path">
-        <dt>2003</dt><dd>Israel, army service</dd>
-        <dt>2005</dt><dd>Shanghai, Mandarin at Fudan University</dd>
-        <dt>2006</dt><dd>Hong Kong, business degree at HKU</dd>
-        <dt>2009</dt><dd>Mexico, built a metals buying operation from zero</dd>
-        <dt>2011</dt><dd>Antwerp, diamonds: revenue from €5M to €10M</dd>
-        <dt>2017</dt><dd>Brussels, events, festivals and Résidence L</dd>
-        <dt>2022</dt><dd>The tables, tournament pro and coach</dd>
-        <dt>Now</dt><dd>Koh Phangan, circles, writing, building with AI</dd>
-      </dl>
+      <div class="turn" data-q="story">
+        <h3>Your turn: what's your couch question?</h3>
+        <div class="opts">
+          <button class="opt" type="button" data-a="What am I doing with my life?">What am I doing with my life?</button>
+          <button class="opt" type="button" data-a="Who am I doing it for?">Who am I doing it for?</button>
+          <button class="opt" type="button" data-a="I don't have one yet">I don't have one yet</button>
+        </div>
+        <p class="reply" aria-live="polite"></p>
+      </div>
+      <details class="cv">
+        <summary>The long version (my CV)</summary>
+        <div class="cvbody">
+          <dl class="path" aria-label="The path">
+            <dt>2003</dt><dd>Israel, army service</dd>
+            <dt>2005</dt><dd>Shanghai, Mandarin at Fudan University</dd>
+            <dt>2006</dt><dd>Hong Kong, business degree at HKU</dd>
+            <dt>2009</dt><dd>Mexico, set up a metals buying operation from zero: suppliers, a warehouse, a team</dd>
+            <dt>2011</dt><dd>Antwerp, the family diamond business: helped double revenue and built one of Belgium's biggest online diamond shops</dd>
+            <dt>2017</dt><dd>Brussels, events and festivals, and Résidence L</dd>
+            <dt>2022</dt><dd>Full-time tournament poker and coaching: around $4M in cashes, a Sunday Million win, SCOOP and WCOOP final tables</dd>
+            <dt>Now</dt><dd>Koh Phangan: circles, writing, and building with AI</dd>
+          </dl>
+          <p class="small">Languages: English, French, Dutch, Hebrew and Spanish. Happy to send a proper CV, just ask at the center.</p>
+        </div>
+      </details>
     </section>
 
     <section class="room" data-step="2" id="building" hidden>
-      <div class="top"><img class="arch" src="img/building.jpg" alt="Michael leaning against a tree trunk at dusk" width="640" height="800"><div><span class="mono where">Second turn · Building</span>
-      <h2>Tools for people who don't fit in one box</h2></div></div>
-      <p class="lede">I started building with AI in 2026. Two apps are live, and both come from problems I lived myself.</p>
+      <div class="top"><img class="photo" src="img/building.jpg" alt="Michael leaning against a tree trunk at dusk" width="640" height="800"><div><span class="mono where">Second turn · Building</span>
+      <h2>Small tools for real problems</h2></div></div>
+      <p class="lede">I started building with AI this year, mostly to fix problems I had myself. Two are live and still rough around the edges. Try them and tell me what's missing.</p>
       <ul class="plain">
-        <li><b>Generalist Compass</b><span class="muted">For people with mixed careers. It reads your story, finds the thread, and shows you companies that need what you've already done. Recruiters describe a problem, not a job title.</span><a href="https://generalist-compass.vercel.app" target="_blank" rel="noopener">Open Generalist Compass →</a></li>
-        <li><b>Table Ready</b><span class="muted">The reality check for tournament players: should you play today, what variance really looks like at your stakes, a tilt reset, and someone to talk to after a bad beat.</span><a href="https://table-ready-eosin.vercel.app" target="_blank" rel="noopener">Open Table Ready →</a></li>
+        <li><b>Generalist Compass</b><span class="muted">For people whose careers don't fit one box. It reads your story, finds the thread, and points you to companies that need what you've already done.</span><a href="https://generalist-compass.vercel.app" target="_blank" rel="noopener">Open Generalist Compass →</a></li>
+        <li><b>Table Ready</b><span class="muted">For tournament players: should you play today, what variance really looks like at your stakes, and a calm voice after a bad beat.</span><a href="https://table-ready-eosin.vercel.app" target="_blank" rel="noopener">Open Table Ready →</a></li>
       </ul>
+      <div class="turn" data-q="building">
+        <h3>Your turn: what would you want a tool for?</h3>
+        <div class="opts">
+          <button class="opt" type="button" data-a="Finding work that fits me">Finding work that fits me</button>
+          <button class="opt" type="button" data-a="Staying calm at the tables">Staying calm at the tables</button>
+          <button class="opt" type="button" data-a="Something nobody has built yet">Something nobody has built yet</button>
+        </div>
+        <p class="reply" aria-live="polite"></p>
+      </div>
     </section>
 
     <section class="room" data-step="3" id="writing" hidden>
-      <div class="top"><img class="arch" src="img/writing.jpg" alt="Michael sitting on rocks, deep in thought" width="640" height="800"><div><span class="mono where">Third turn · Writing</span>
+      <div class="top"><img class="photo" src="img/writing.jpg" alt="Michael sitting on rocks, deep in thought" width="640" height="800"><div><span class="mono where">Third turn · Writing</span>
       <h2>A book, a Substack, and poems in between</h2></div></div>
       <p class="lede"><em>Open Your I's</em> is a book about a conversation with the part of me that already knew. Stories from trading floors, festivals and poker tables, and the self-inquiry that tied them together.</p>
       <blockquote>“When you talk to me, you talk to yourself and the whole universe.”</blockquote>
@@ -197,46 +267,74 @@ Words are just words,
 no meaning but reason to viral for satire
 and silent enough for flowers.</p>
       <p class="small">From “Something is pushing me to write”.</p>
+      <div class="turn" data-q="writing">
+        <h3>Your turn: take a question home</h3>
+        <p class="muted" style="font-size:16px">The kind of question the book is made of. No need to answer it here.</p>
+        <div class="opts"><button class="opt" type="button" id="drawQ">Draw a question</button></div>
+        <p class="reply" aria-live="polite"></p>
+      </div>
       <div class="links">
         <a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Read my Substack →</a>
         <a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">My poems on All Poetry →</a>
-        <a href="#center" data-go="6">Get the first chapter when it's out →</a>
       </div>
     </section>
 
     <section class="room" data-step="4" id="poker" hidden>
-      <div class="top"><img class="arch" src="img/poker.jpg" alt="Michael at a poker table in a hoodie, black and white" width="640" height="800"><div><span class="mono where">Fourth turn · The Poker Monk</span>
-      <h2>Tournament poker, from a quiet mind</h2></div></div>
-      <p class="lede">I play MTTs on GGPoker, ACR and CoinPoker. Sunday Million winner, SCOOP and WCOOP final tables. Trained under BBZ (Jordan Drummond) and Enrico Camosci. I coach strategy and the mental game on Zoom, with Discord access. The first intro call is free.</p>
+      <div class="top"><img class="photo" src="img/poker.jpg" alt="Michael at a poker table in a hoodie, black and white" width="640" height="800"><div><span class="mono where">Fourth turn · The Poker Monk</span>
+      <h2>Poker, from a quiet mind</h2></div></div>
+      <p class="lede">I play tournaments for a living. The biggest thing the tables taught me isn't strategy. It's what happens in your head after the third bad beat in a row. I coach both, on Zoom, and the first call is free so we can see if it fits.</p>
+      <div class="turn" data-q="poker">
+        <h3>Your turn: feel the variance</h3>
+        <p class="muted" style="font-size:16px">You win 55% of your coin flips. That's a real edge. Now flip 100 times.</p>
+        <div class="opts"><button class="opt" type="button" id="flipBtn">Flip 100 times</button></div>
+        <div class="flips" id="flips" hidden>
+          <svg viewBox="0 0 300 90" preserveAspectRatio="none" aria-hidden="true"><line class="zero" x1="0" x2="300" y1="45" y2="45"/><polyline class="run" id="flipRun" points=""/></svg>
+        </div>
+        <p class="reply" id="flipReply" aria-live="polite"></p>
+      </div>
       <div class="prices">
         <div class="price"><span>Single session</span><b>$120</b><span>75 to 90 minutes</span></div>
-        <div class="price pop"><span>The Package</span><b>$500</b><span>5 sessions · most popular</span></div>
-        <div class="price"><span>The Program</span><b>$800</b><span>10 sessions</span></div>
-        <div class="price"><span>Mystery Package</span><b>Let's talk</b><span>Built around you</span></div>
+        <div class="price"><span>5 sessions</span><b>$500</b><span>The Package</span></div>
+        <div class="price"><span>10 sessions</span><b>$800</b><span>The Program</span></div>
+        <div class="price"><span>Something else</span><b>Let's talk</b><span>Built around you</span></div>
       </div>
-      <div class="links"><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">See coaching on The Poker Monk site →</a></div>
-      <p class="small">Results vary by player and effort. I don't promise to fix a game in five sessions.</p>
+      <div class="links"><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">More on The Poker Monk site →</a></div>
     </section>
 
     <section class="room" data-step="5" id="circles" hidden>
-      <div class="top"><img class="arch" src="img/circles.jpg" alt="Michael on a beach at sunset on Koh Phangan" width="640" height="800"><div><span class="mono where">Fifth turn · Circles</span>
+      <div class="top"><img class="photo" src="img/circles.jpg" alt="Michael on a beach at sunset on Koh Phangan" width="640" height="800"><div><span class="mono where">Fifth turn · Circles</span>
       <h2>Bringing people together</h2></div></div>
-      <p class="lede">The thread through everything I do.</p>
+      <p class="lede">This is the part I care about most. Everything else keeps leading back to it.</p>
       <ul class="plain">
-        <li><b>The Drop Circle</b><span class="muted">A weekly fire circle at The Source on Koh Phangan, every Wednesday. Back after the season break, from the end of November.</span></li>
-        <li><b>The Drop</b><span class="muted">An immersive retreat in the making: a few days to drop the noise, meet real people and come back to yourself.</span><a id="dropLink" href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">Visit The Drop →</a></li>
-        <li><b>Résidence L and festivals</b><span class="muted">A community and events brand in Brussels with about 200 members, and festivals like Dhamar Tal with about 700 guests.</span></li>
+        <li><b>The Drop Circle</b><span class="muted">A fire circle at The Source on Koh Phangan, every Wednesday. Back after the season break, from the end of November.</span></li>
+        <li><b>The Drop</b><span class="muted">A retreat in the making: a few days to drop the noise, meet real people and come back to yourself.</span><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">Visit The Drop →</a></li>
+        <li><b>Brussels, before all this</b><span class="muted">Years of festivals and Résidence L. What stayed with me were the people, not the parties.</span></li>
       </ul>
+      <div class="turn" data-q="circles">
+        <h3>Your turn: what do you bring to a fire?</h3>
+        <div class="opts">
+          <button class="opt" type="button" data-a="A story">A story</button>
+          <button class="opt" type="button" data-a="A question">A question</button>
+          <button class="opt" type="button" data-a="A song">A song</button>
+          <button class="opt" type="button" data-a="Silence">Silence</button>
+        </div>
+        <p class="reply" aria-live="polite"></p>
+      </div>
     </section>
 
     <section class="room" data-step="6" id="center" hidden>
-      <div class="top"><img class="arch big" src="img/center.jpg" alt="Michael Ender in a black hat, looking into the camera" width="640" height="800"><div><span class="mono where">The center</span>
+      <div class="top"><img class="photo big" src="img/center.jpg" alt="Michael Ender in a black hat, looking into the camera" width="640" height="800"><div><span class="mono where">The center</span>
       <h2>You made it. Let's meet.</h2></div></div>
-      <p class="lede">Coaching, a project, a role, or an idea you want to build. Write me a line and we'll find a time.</p>
+      <div class="yourwalk" id="yourWalk" hidden></div>
+      <div class="gift" id="gift" hidden>
+        <p class="reply" style="color:var(--ink)">You caught all five fireflies.</p>
+        <p class="muted">Write me the word <b style="color:var(--candle)">firefly</b> and I'll send you the first chapter of <em>Open Your I's</em> before anyone else reads it.</p>
+      </div>
+      <p class="lede">Coaching, a project, a role, or just a conversation. Write me a line and we'll find a time.</p>
       <div class="mailrow"><code id="mail">endermike@gmail.com</code><button class="mini" id="copyMail" type="button">Copy</button></div>
       <p class="note" id="copyNote" role="status"></p>
       <h3 style="font-size:28px;margin-top:8px">Or follow the journey</h3>
-      <p class="muted">One letter, now and then: new chapters, new tools, and what I'm learning about poker, people and building with AI.</p>
+      <p class="muted">A letter now and then: new chapters, new tools, and what I'm learning about poker, people and building with AI.</p>
       <form class="join" id="joinForm" novalidate>
         <label for="joinEmail" class="sr">Your email</label>
         <input id="joinEmail" type="email" placeholder="you@example.com" autocomplete="email">
@@ -263,6 +361,9 @@ and silent enough for flowers.</p>
   const el = (t, a, parent) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (parent || svg).append(e); return e; };
   const stationAngle = k => gap(k) + dir(k) * Math.PI / 2;
   const station = s => s === 0 ? [0, R + 26] : s === 6 ? [0, 0] : pt(pathR(s - 1), stationAngle(s - 1));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const store = { get(){ try { return JSON.parse(localStorage.getItem("me-walk") || "{}"); } catch(e){ return {}; } }, set(v){ try { localStorage.setItem("me-walk", JSON.stringify(v)); } catch(e){} } };
+  const state = Object.assign({answers:{}, flies:[]}, store.get());
 
   function arcPts(pts, r, a0, a1){ const n = Math.max(6, Math.ceil(Math.abs(a1 - a0) * r / 8)); for (let i = 0; i <= n; i++) pts.push(pt(r, a0 + (a1 - a0) * i / n)); }
   function leg(s){
@@ -282,34 +383,45 @@ and silent enough for flowers.</p>
     else for (let s = from - 1; s >= to; s--) pts = pts.concat(leg(s).slice().reverse());
     return pts.length ? pts : [station(from)];
   }
+  const ptsAttr = pts => pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
 
   // draw the labyrinth
   const defs = el("defs", {}); const rg = el("radialGradient", {id:"flame"}, defs);
   el("stop", {offset:"0%", "stop-color":"#F2B653", "stop-opacity":".55"}, rg); el("stop", {offset:"100%", "stop-color":"#E3793F", "stop-opacity":"0"}, rg);
-  for (let k = 0; k < RINGS; k++) el("circle", {cx:0, cy:0, r:pathR(k), class:"ring"});
+  const rings = []; for (let k = 0; k < RINGS; k++) rings.push(el("circle", {cx:0, cy:0, r:pathR(k), class:"ring"}));
+  const walkedG = el("g", {}); const walkedLegs = new Set();
   const trail = el("polyline", {class:"trail", points:""});
   for (let k = 0; k <= RINGS; k++){
     const r = wallR(k), a = gap(k), w = 16 / r * 1.6 + 0.06;
     const [x1, y1] = pt(r, a + w), [x2, y2] = pt(r, a - w + 2 * Math.PI);
-    el("path", {class:"wall", pathLength:"1", d:`M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 1 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`});
+    // the walls catch the light one by one, from the flame at the gate inward
+    el("path", {class:"wall", pathLength:"1", style:"animation-delay:" + (1.1 + k * 0.22).toFixed(2) + "s", d:`M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 1 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`});
   }
-  el("circle", {cx:0, cy:0, r:wallR(RINGS) - 12, class:"heart"});
+  el("circle", {cx:0, cy:0, r:wallR(RINGS) - 12, class:"heart late"});
   for (let k = 0; k < RINGS; k++){
     // label on the upper half of each ring so it always reads left to right
     const r = pathR(k) - 4, a0 = -Math.PI * 0.86, a1 = -Math.PI * 0.14, id = "lp" + k;
     const [ax, ay] = pt(r, a0), [bx, by] = pt(r, a1);
     el("path", {id, d:`M ${ax.toFixed(2)} ${ay.toFixed(2)} A ${r} ${r} 0 0 1 ${bx.toFixed(2)} ${by.toFixed(2)}`, fill:"none"});
-    const t = el("text", {class:"lab", "data-go":String(k + 1), dy:"4", tabindex:"0", role:"button", "aria-label":"Go to " + NAMES[k + 1], "text-anchor":"middle"});
+    const t = el("text", {class:"lab late", "data-go":String(k + 1), dy:"4", tabindex:"0", role:"button", "aria-label":"Go to " + NAMES[k + 1], "text-anchor":"middle"});
     const tp = el("textPath", {href:"#" + id, startOffset:"50%"}, t); tp.textContent = NAMES[k + 1];
   }
   const stones = [];
-  for (let s = 0; s <= 6; s++){ const [x, y] = station(s); stones.push(el("circle", {cx:x, cy:y, r: s === 6 ? 8 : 5, class:"stone"})); }
-  const glow = el("circle", {r:46, class:"glow"});
+  for (let s = 0; s <= 6; s++){ const [x, y] = station(s); stones.push(el("circle", {cx:x, cy:y, r: s === 6 ? 8 : 5, class:"stone late"})); }
+  const glowWrap = el("g", {class:"glow-wrap"});
+  const glow = el("circle", {r:46, class:"glow"}, glowWrap);
   const walker = el("circle", {r:9, class:"walker"});
 
   let cur = 0, anim = 0; const seen = new Set([0]);
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function place([x, y]){ walker.setAttribute("cx", x); walker.setAttribute("cy", y); glow.setAttribute("cx", x); glow.setAttribute("cy", y); }
+  function markWalked(a, b){
+    // every leg you have walked stays lit
+    for (let s = Math.min(a, b); s < Math.max(a, b); s++){
+      if (walkedLegs.has(s)) continue; walkedLegs.add(s);
+      el("polyline", {class:"walked", points:ptsAttr(leg(s))}, walkedG);
+      if (s < RINGS) rings[s].classList.add("lit");
+    }
+  }
   function show(s){
     document.querySelectorAll(".room").forEach(r => r.hidden = Number(r.dataset.step) !== s);
     document.body.classList.toggle("at-gate", s === 0);
@@ -318,18 +430,20 @@ and silent enough for flowers.</p>
     document.getElementById("walk").textContent = s === 6 ? "Back to the gate ↺" : "Walk on →";
     document.querySelectorAll(".lab").forEach(l => l.classList.toggle("here", Number(l.dataset.go) === s));
     stones.forEach((st, i) => st.classList.toggle("seen", seen.has(i)));
+    placeFirefly(s);
+    if (s === 6) renderWalk();
     try { history.replaceState(null, "", s === 0 ? location.pathname : "#" + IDS[s]); } catch(e){}
   }
   function go(to){
     if (to === cur) return;
     const pts = route(cur, to); cancelAnimationFrame(anim);
     for (let s = Math.min(cur, to); s <= Math.max(cur, to); s++) seen.add(s);
-    trail.setAttribute("points", pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "));
-    cur = to; show(to);
+    trail.setAttribute("points", ptsAttr(pts));
+    const from = cur; cur = to; show(to);
     if (innerWidth <= 860) document.getElementById("rooms").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
-    if (reduce || pts.length < 2){ place(pts[pts.length - 1]); return; }
+    if (reduce || pts.length < 2){ place(pts[pts.length - 1]); markWalked(from, to); return; }
     const t0 = performance.now(), dur = Math.min(2200, 500 + pts.length * 9);
-    const tick = now => { const p = Math.min(1, (now - t0) / dur), e = p < .5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2) / 2; place(pts[Math.min(pts.length - 1, Math.round(e * (pts.length - 1)))]); if (p < 1) anim = requestAnimationFrame(tick); };
+    const tick = now => { const p = Math.min(1, (now - t0) / dur), e = p < .5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2) / 2; place(pts[Math.min(pts.length - 1, Math.round(e * (pts.length - 1)))]); if (p < 1) anim = requestAnimationFrame(tick); else markWalked(from, to); };
     anim = requestAnimationFrame(tick);
   }
   document.getElementById("walk").onclick = () => go(cur === 6 ? 0 : cur + 1);
@@ -341,8 +455,86 @@ and silent enough for flowers.</p>
     if (e.key === "ArrowRight" || e.key === "ArrowDown"){ if (cur < 6){ e.preventDefault(); go(cur + 1); } }
     if (e.key === "ArrowLeft" || e.key === "ArrowUp"){ if (cur > 0){ e.preventDefault(); go(cur - 1); } }
   });
+
+  // fireflies: one hides in each of the five rooms
+  const jarDots = document.querySelectorAll(".jar i");
+  function renderJar(){ jarDots.forEach((d, i) => d.classList.toggle("on", i < state.flies.length)); document.getElementById("jarText").textContent = state.flies.length === 5 ? "All five caught" : "Fireflies caught"; }
+  function placeFirefly(s){
+    document.querySelectorAll(".catch").forEach(c => c.remove());
+    if (s < 1 || s > 5 || state.flies.includes(s)) return;
+    const room = document.querySelector('.room[data-step="' + s + '"]');
+    const b = document.createElement("button"); b.className = "catch"; b.type = "button"; b.setAttribute("aria-label", "Catch the firefly");
+    b.style.left = (8 + Math.random() * 84).toFixed(1) + "%"; b.style.top = (28 + Math.random() * 64).toFixed(1) + "%";
+    b.onclick = () => {
+      const r = b.getBoundingClientRect(), dot = jarDots[state.flies.length], t = dot.getBoundingClientRect();
+      state.flies.push(s); store.set(state); b.remove();
+      if (reduce){ renderJar(); return; }
+      const f = document.createElement("div"); f.className = "flying"; f.style.left = (r.left + r.width/2 - 5) + "px"; f.style.top = (r.top + r.height/2 - 5) + "px"; document.body.append(f);
+      requestAnimationFrame(() => requestAnimationFrame(() => { f.style.left = t.left + "px"; f.style.top = t.top + "px"; f.style.transform = "scale(.6)"; }));
+      setTimeout(() => { f.remove(); renderJar(); }, 950);
+    };
+    room.append(b);
+  }
+
+  // your turn: small questions in each room
+  const REPLIES = {
+    "What am I doing with my life?": "That one sent me from Antwerp to Koh Phangan. Careful, it travels.",
+    "Who am I doing it for?": "Good one. Mine took years to answer honestly.",
+    "I don't have one yet": "Then you're probably busy living. That's allowed.",
+    "Finding work that fits me": "That's why Generalist Compass exists. Give it your story.",
+    "Staying calm at the tables": "Table Ready is for exactly that. Start with the check-in.",
+    "Something nobody has built yet": "Tell me at the center. That's how the last two started.",
+    "A story": "Then you're the one people lean in for.",
+    "A question": "The best fires I've sat at started with one.",
+    "A song": "Bring it on a Wednesday. We'll be quiet for it.",
+    "Silence": "Underrated. Most circles need more of it."
+  };
+  function answer(q, a){
+    const box = document.querySelector('.turn[data-q="' + q + '"]'); if (!box) return;
+    box.querySelectorAll(".opt[data-a]").forEach(o => o.classList.toggle("picked", o.dataset.a === a));
+    box.querySelector(".reply").textContent = REPLIES[a] || "";
+  }
+  document.querySelectorAll(".opt[data-a]").forEach(o => o.addEventListener("click", () => {
+    const q = o.closest(".turn").dataset.q; state.answers[q] = o.dataset.a; store.set(state); answer(q, o.dataset.a);
+  }));
+  for (const q in state.answers) if (q !== "writing" && q !== "poker") answer(q, state.answers[q]);
+
+  const QUESTIONS = ["Who is reading this sentence?","What would you do tomorrow if nobody was watching?","What are you still waiting for permission to do?","When did you last feel completely at home?","What would you stop doing if you trusted yourself?","What is aware of this moment, right now?","Whose voice is the one that tells you to be careful?","What did you love before you learned to be useful?"];
+  let qi = Math.floor(Math.random() * QUESTIONS.length);
+  document.getElementById("drawQ").onclick = function(){
+    qi = (qi + 1 + Math.floor(Math.random() * (QUESTIONS.length - 1))) % QUESTIONS.length;
+    const r = this.closest(".turn").querySelector(".reply"); r.textContent = ""; void r.offsetWidth; r.textContent = QUESTIONS[qi];
+    this.textContent = "Draw another"; state.answers.writing = QUESTIONS[qi]; store.set(state);
+  };
+
+  // the coin flip: what a real edge feels like over a short run
+  document.getElementById("flipBtn").onclick = function(){
+    const run = [0]; let v = 0; for (let i = 0; i < 100; i++){ v += Math.random() < .55 ? 1 : -1; run.push(v); }
+    let losing = 0; for (let p = 0; p < 1000; p++){ let w = 0; for (let i = 0; i < 100; i++) w += Math.random() < .55 ? 1 : -1; if (w < 0) losing++; }
+    const max = Math.max(20, ...run.map(Math.abs));
+    document.getElementById("flipRun").setAttribute("points", run.map((y, i) => (i * 3).toFixed(1) + "," + (45 - y / max * 40).toFixed(1)).join(" "));
+    document.getElementById("flips").hidden = false;
+    const end = run[run.length - 1], pct = Math.round(losing / 10);
+    document.getElementById("flipReply").textContent = (end > 0 ? "You finished up " + end + "." : end < 0 ? "You finished down " + (-end) + ", with an edge." : "You finished exactly even.") + " Out of 1,000 players with the same edge, " + losing + " (" + pct + "%) were still losing after 100 flips. That's the job.";
+    this.textContent = "Flip again"; state.answers.poker = end; store.set(state);
+  };
+
+  // the center: what you left along the way
+  function renderWalk(){
+    const a = state.answers, box = document.getElementById("yourWalk"), lines = [];
+    if (a.story) lines.push("Your couch question: <b>" + a.story + "</b>");
+    if (a.building) lines.push("A tool you'd want: <b>" + a.building + "</b>");
+    if (a.writing) lines.push("A question you took home: <b>" + a.writing + "</b>");
+    if (typeof a.poker === "number") lines.push("Your 100 flips: <b>" + (a.poker > 0 ? "+" : "") + a.poker + "</b>");
+    if (a.circles) lines.push("You bring to the fire: <b>" + a.circles + "</b>");
+    box.hidden = !lines.length;
+    box.innerHTML = lines.length ? '<span class="mono where">Your walk</span>' + lines.map(l => "<p>" + l + "</p>").join("") + '<p>Tell me about any of it when you write.</p>' : "";
+    document.getElementById("gift").hidden = state.flies.length < 5;
+  }
+
+  renderJar();
   const start = Math.max(0, IDS.indexOf((location.hash || "").slice(1)));
-  cur = start; for (let s = 0; s <= start; s++) seen.add(s); place(station(start)); show(start);
+  cur = start; for (let s = 0; s <= start; s++) seen.add(s); place(station(start)); markWalked(0, start); show(start);
   if (start === 0) requestAnimationFrame(() => window.scrollTo(0, 0));
 
   // night sky: fireflies and rising embers
