@@ -119,11 +119,9 @@ body.at-gate .maze header b{opacity:0}
 .room ul.plain li b{font-family:var(--display);font-weight:400;font-size:24px}
 blockquote{margin:0;font-family:var(--display);font-size:clamp(22px,2.4vw,27px);line-height:1.35;padding-left:18px;border-left:3px solid var(--candle)}
 .poem{font-family:var(--display);font-size:20px;line-height:1.55;white-space:pre-line}
-.prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.price{border:1.5px solid rgba(242,182,83,.22);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
-.price b{font-family:var(--mono);font-weight:500;font-size:22px;font-variant-numeric:tabular-nums}
-.price span{font-size:14px;color:var(--muted)}
 .small{font-size:14px;color:var(--muted)}
+.offer{border:1.5px solid rgba(242,182,83,.22);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.offer b{font-weight:700}
 .creds{color:var(--candle);font-size:12px;line-height:1.7}
 .room ul.plain li.feat{border:1px solid rgba(242,182,83,.35);border-radius:18px;padding:16px 18px;background:rgba(242,182,83,.05);gap:6px}
 .room ul.plain li.feat b{font-size:28px}
@@ -211,7 +209,6 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
   .maze svg{max-width:340px}
   .room{min-height:0}
 }
-@media (max-width:420px){ .prices{grid-template-columns:1fr} }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   .maze svg .wall{stroke-dashoffset:0}
@@ -286,8 +283,7 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
         <li class="feat"><b>replayer.live</b><span class="muted">Free tools for tournament players. Replay and share hands from eight poker sites, find your leaks next to winning players, drill your ranges, run ICM spots, and send the hands you're unsure about to a coach. Your hands stay on your device.</span><span class="tags"><span>Replayer</span><span>Leak finder</span><span>Range charts</span><span>Trainer</span><span>ICM calculator</span><span>Coaches</span></span><a href="https://replayer.live" target="_blank" rel="noopener">Open replayer.live →</a></li>
         <li><b>Generalist Compass</b><span class="muted">For people whose careers don't fit one box. It reads your story, finds the thread, and points you to companies that need what you've already done.</span><a href="https://generalist-compass.vercel.app" target="_blank" rel="noopener">Open Generalist Compass →</a></li>
         <li><b>Table Ready</b><span class="muted">For tournament players: should you play today, what variance really looks like at your stakes, and a calm voice after a bad beat.</span><a href="https://table-ready-eosin.vercel.app" target="_blank" rel="noopener">Open Table Ready →</a></li>
-        <li><b>Alexia's Squishy World</b><span class="muted">A reading and math game I built for my niece. Short spoken rounds earn stars she spends on her squishy pet.</span></li>
-        <li><b>Websites for people doing good work</b><span class="muted">Like this one, and Shaly Blits' Body Mind Reset site. Want something built? Tell me at the center.</span></li>
+        <li class="feat"><b>Studio</b><span class="muted">Everything I build, in one place: replayer.live, websites for people doing good work like Shaly Blits' Body Mind Reset, small apps and games, and my book. Want something built? Tell me at the center.</span><a href="STUDIO_URL" target="_blank" rel="noopener">Visit the Studio →</a></li>
       </ul>
       <div class="turn" data-q="building">
         <h3>Your turn: what would you want a tool for?</h3>
@@ -338,13 +334,10 @@ and silent enough for flowers.</p>
         </div>
         <p class="reply" id="flipReply" aria-live="polite"></p>
       </div>
-      <p class="muted" style="font-size:16px">The first call is free, so we can see if it fits.</p>
-      <div class="prices">
-        <div class="price"><span>Hand review</span><b>from $15</b><span>5 hands, back in 48 hours</span></div>
-        <div class="price"><span>Single session</span><b>$120</b><span>75 to 90 minutes on Zoom</span></div>
-        <div class="price"><span>5 sessions</span><b>$500</b><span>The Package</span></div>
-        <div class="price"><span>10 sessions</span><b>$800</b><span>The Program</span></div>
-        </div>
+      <div class="offer">
+        <p><b>Hand reviews, 1-on-1 sessions and packages.</b> The first call is free, so we can see if it fits. Write me for prices and we'll build it around you.</p>
+        <a class="btn walk" href="#center" data-go="6">Ask me for prices →</a>
+      </div>
       <div class="links"><a href="https://replayer.live/coaching/phanteidos1" target="_blank" rel="noopener">Send me your hands →</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">More on The Poker Monk site →</a></div>
     </section>
 
@@ -399,7 +392,7 @@ and silent enough for flowers.</p>
         <button class="btn walk" type="submit">Join</button>
       </form>
       <p class="note" id="joinNote" role="status"></p>
-      <div class="links"><a href="https://replayer.live" target="_blank" rel="noopener">replayer.live</a><a href="https://replayer.live/book" target="_blank" rel="noopener">The book</a><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram @phanteidos1</a></div>
+      <div class="links"><a href="STUDIO_URL" target="_blank" rel="noopener">Studio</a><a href="https://replayer.live" target="_blank" rel="noopener">replayer.live</a><a href="https://replayer.live/book" target="_blank" rel="noopener">The book</a><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram @phanteidos1</a></div>
       <p class="small">Antwerp · Koh Phangan · © 2026 Michael Ender</p>
     </section>
   </main>
