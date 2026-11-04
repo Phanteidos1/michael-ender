@@ -6,7 +6,13 @@
 <meta name="theme-color" content="#080B09">
 <meta property="og:title" content="Michael Ender">
 <meta property="og:description" content="Walk the labyrinth to the center and we'll meet. Writing, building, poker and circles, from Koh Phangan.">
-<meta property="og:image" content="/img/center.jpg">
+<meta property="og:image" content="https://michael-ender.vercel.app/img/center.jpg">
+<meta property="og:url" content="https://michael-ender.vercel.app/">
+<meta property="og:type" content="profile">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://michael-ender.vercel.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Crect x='-50' y='-50' width='100' height='100' rx='22' fill='%23080B09'/%3E%3Cg fill='none' stroke='%23F2B653' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M-8 37A38 38 0 1 1 8 37'/%3E%3Cpath d='M8 -24A25 25 0 1 1 -8 -24'/%3E%3C/g%3E%3Ccircle r='6' fill='%23FFE3A6'/%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Michael Ender","alternateName":"Phanteidos1","url":"https://michael-ender.vercel.app/","image":"https://michael-ender.vercel.app/img/center.jpg","jobTitle":"Tournament poker player, coach and builder","homeLocation":"Koh Phangan, Thailand","knowsLanguage":["English","French","Dutch","Hebrew","Spanish"],"sameAs":["https://instagram.com/Phanteidos1","https://substack.com/@phanteidos1","https://allpoetry.com/Michael_Ender","https://replayer.live"]}</script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
 <script defer src="/_vercel/insights/script.js"></script>
 <title>Michael Ender</title>
@@ -118,6 +124,11 @@ blockquote{margin:0;font-family:var(--display);font-size:clamp(22px,2.4vw,27px);
 .price b{font-family:var(--mono);font-weight:500;font-size:22px;font-variant-numeric:tabular-nums}
 .price span{font-size:14px;color:var(--muted)}
 .small{font-size:14px;color:var(--muted)}
+.creds{color:var(--candle);font-size:12px;line-height:1.7}
+.room ul.plain li.feat{border:1px solid rgba(242,182,83,.35);border-radius:18px;padding:16px 18px;background:rgba(242,182,83,.05);gap:6px}
+.room ul.plain li.feat b{font-size:28px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}
+.tags span{font-size:13px;border:1px solid rgba(242,182,83,.3);border-radius:999px;padding:3px 10px;color:var(--ink)}
 .links{display:flex;gap:10px 20px;flex-wrap:wrap;font-weight:700}
 
 /* the long version */
@@ -195,6 +206,8 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
 @media (max-width:860px){
   .page{grid-template-columns:minmax(0,1fr);gap:20px}
   .maze{position:static}
+  body.at-gate .maze{order:2}
+  body.at-gate .maze header{display:none}
   .maze svg{max-width:340px}
   .room{min-height:0}
 }
@@ -226,7 +239,7 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
       <span class="mono where">Koh Phangan, Thailand</span>
       <h1 class="name">Michael <span>Ender</span></h1>
       <p class="invite">Come in. Walk to the center and we'll meet.</p>
-      <p class="lede muted">I've traded diamonds and scrap metal, organized events in Brussels and played poker for a living. These days I write, build small tools with AI and sit around fires with people. Five turns, one for each, and a seat by the fire in the middle.</p>
+      <p class="lede muted">I've traded diamonds and scrap metal and organized events in Brussels. Today I play tournament poker for a living, coach, build poker tools with AI, write, and sit around fires with people. Five turns, one for each, and a seat by the fire in the middle.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn walk" type="button" data-go="1">Enter the labyrinth →</button></div>
       <p class="muted">Five fireflies are hiding along the way. Catch them all and something opens in the center.</p>
       <p class="small">In a hurry? <a href="#center" data-go="6">Go straight to the center</a>, or say hi on Instagram: <a href="https://instagram.com/phanteidos1" target="_blank" rel="noopener">@phanteidos1</a>.</p>
@@ -257,7 +270,8 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
             <dt>2011</dt><dd>Antwerp, the family diamond business: helped double revenue and built one of Belgium's biggest online diamond shops</dd>
             <dt>2017</dt><dd>Brussels, events and festivals, and Résidence L</dd>
             <dt>2022</dt><dd>Full-time tournament poker and coaching: around $4M in cashes, a Sunday Million win, SCOOP and WCOOP final tables</dd>
-            <dt>Now</dt><dd>Koh Phangan: circles, writing, and building with AI</dd>
+            <dt>2026</dt><dd>Started building with AI: replayer.live, small apps and websites</dd>
+            <dt>Now</dt><dd>Koh Phangan: poker, coaching, writing and circles</dd>
           </dl>
           <p class="small">Languages: English, French, Dutch, Hebrew and Spanish. Happy to send a proper CV, just ask at the center.</p>
         </div>
@@ -266,16 +280,20 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
 
     <section class="room" data-step="2" id="building" hidden>
       <div class="top"><img class="photo" src="img/building.jpg" alt="Michael leaning against a tree trunk at dusk" width="640" height="800"><div><span class="mono where">Second turn · Building</span>
-      <h2>Small tools for real problems</h2></div></div>
-      <p class="lede">I started building with AI this year, mostly to fix problems I had myself. Two are live and still rough around the edges. Try them and tell me what's missing.</p>
+      <h2>Tools for real problems</h2></div></div>
+      <p class="lede">I started building with AI this year, mostly to fix problems I had myself. The biggest one grew into a full poker platform. Try anything here and tell me what's missing.</p>
       <ul class="plain">
+        <li class="feat"><b>replayer.live</b><span class="muted">Free tools for tournament players. Replay and share hands from eight poker sites, find your leaks next to winning players, drill your ranges, run ICM spots, and send the hands you're unsure about to a coach. Your hands stay on your device.</span><span class="tags"><span>Replayer</span><span>Leak finder</span><span>Range charts</span><span>Trainer</span><span>ICM calculator</span><span>Coaches</span></span><a href="https://replayer.live" target="_blank" rel="noopener">Open replayer.live →</a></li>
         <li><b>Generalist Compass</b><span class="muted">For people whose careers don't fit one box. It reads your story, finds the thread, and points you to companies that need what you've already done.</span><a href="https://generalist-compass.vercel.app" target="_blank" rel="noopener">Open Generalist Compass →</a></li>
         <li><b>Table Ready</b><span class="muted">For tournament players: should you play today, what variance really looks like at your stakes, and a calm voice after a bad beat.</span><a href="https://table-ready-eosin.vercel.app" target="_blank" rel="noopener">Open Table Ready →</a></li>
+        <li><b>Alexia's Squishy World</b><span class="muted">A reading and math game I built for my niece. Short spoken rounds earn stars she spends on her squishy pet.</span></li>
+        <li><b>Websites for people doing good work</b><span class="muted">Like this one, and Shaly Blits' Body Mind Reset site. Want something built? Tell me at the center.</span></li>
       </ul>
       <div class="turn" data-q="building">
         <h3>Your turn: what would you want a tool for?</h3>
         <div class="opts">
           <button class="opt" type="button" data-a="Finding work that fits me">Finding work that fits me</button>
+          <button class="opt" type="button" data-a="Reviewing my poker hands">Reviewing my poker hands</button>
           <button class="opt" type="button" data-a="Staying calm at the tables">Staying calm at the tables</button>
           <button class="opt" type="button" data-a="Something nobody has built yet">Something nobody has built yet</button>
         </div>
@@ -286,7 +304,7 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
     <section class="room" data-step="3" id="writing" hidden>
       <div class="top"><img class="photo" src="img/writing.jpg" alt="Michael sitting on rocks, deep in thought" width="640" height="800"><div><span class="mono where">Third turn · Writing</span>
       <h2>A book, a Substack, and poems in between</h2></div></div>
-      <p class="lede"><em>Open Your I's</em> is a book about a conversation with the part of me that already knew. Stories from trading floors, festivals and poker tables, and the self-inquiry that tied them together.</p>
+      <p class="lede"><em>Open your I's</em> is my book, and the first stories are online. A guard duty in Jenin with a turtle, a private game in Hong Kong next to a mafia boss, a family of birds over a balcony in Belgium. You read each one with your eyes, then close them and see the same moment from the one who was watching.</p>
       <blockquote>“When you talk to me, you talk to yourself and the whole universe.”</blockquote>
       <p class="poem">We are here for someday and now for love.
 Words are just words,
@@ -300,6 +318,7 @@ and silent enough for flowers.</p>
         <p class="reply" aria-live="polite"></p>
       </div>
       <div class="links">
+        <a href="https://replayer.live/book" target="_blank" rel="noopener">Start reading the book →</a>
         <a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Read my Substack →</a>
         <a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">My poems on All Poetry →</a>
       </div>
@@ -308,7 +327,8 @@ and silent enough for flowers.</p>
     <section class="room" data-step="4" id="poker" hidden>
       <div class="top"><img class="photo" src="img/poker.jpg" alt="Michael at a poker table in a hoodie, black and white" width="640" height="800"><div><span class="mono where">Fourth turn · The Poker Monk</span>
       <h2>Poker, from a quiet mind</h2></div></div>
-      <p class="lede">I play tournaments for a living. The biggest thing the tables taught me isn't strategy. It's what happens in your head after the third bad beat in a row. I coach both, on Zoom, and the first call is free so we can see if it fits.</p>
+      <p class="lede">I play tournaments for a living. The biggest thing the tables taught me isn't strategy. It's what happens in your head after the third bad beat in a row. I coach both: deep runs, final tables, ICM pressure, and the routines that keep you calm when the money gets big.</p>
+      <p class="creds mono">Sunday Million winner · SCOOP and WCOOP final tables · about $4M in cashes</p>
       <div class="turn" data-q="poker">
         <h3>Your turn: feel the variance</h3>
         <p class="muted" style="font-size:16px">You win 55% of your coin flips. That's a real edge. Now flip 100 times.</p>
@@ -318,13 +338,14 @@ and silent enough for flowers.</p>
         </div>
         <p class="reply" id="flipReply" aria-live="polite"></p>
       </div>
+      <p class="muted" style="font-size:16px">The first call is free, so we can see if it fits.</p>
       <div class="prices">
-        <div class="price"><span>Single session</span><b>$120</b><span>75 to 90 minutes</span></div>
+        <div class="price"><span>Hand review</span><b>from $15</b><span>5 hands, back in 48 hours</span></div>
+        <div class="price"><span>Single session</span><b>$120</b><span>75 to 90 minutes on Zoom</span></div>
         <div class="price"><span>5 sessions</span><b>$500</b><span>The Package</span></div>
         <div class="price"><span>10 sessions</span><b>$800</b><span>The Program</span></div>
-        <div class="price"><span>Something else</span><b>Let's talk</b><span>Built around you</span></div>
-      </div>
-      <div class="links"><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">More on The Poker Monk site →</a></div>
+        </div>
+      <div class="links"><a href="https://replayer.live/coaching/phanteidos1" target="_blank" rel="noopener">Send me your hands →</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">More on The Poker Monk site →</a></div>
     </section>
 
     <section class="room" data-step="5" id="circles" hidden>
@@ -333,7 +354,7 @@ and silent enough for flowers.</p>
       <p class="lede">This is the part I care about most. Everything else keeps leading back to it.</p>
       <ul class="plain">
         <li><b>The Drop Circle</b><span class="muted">A fire circle at The Source on Koh Phangan, every Wednesday. Back after the season break, from the end of November.</span></li>
-        <li><b>The Drop</b><span class="muted">A retreat in the making: a few days to drop the noise, meet real people and come back to yourself.</span><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">Visit The Drop →</a></li>
+        <li><b>The Drop</b><span class="muted">A weeklong immersive retreat for people who have already won. Small group, by invitation only.</span><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">Visit The Drop →</a></li>
         <li><b>Brussels, before all this</b><span class="muted">Years of festivals and Résidence L. What stayed with me were the people, not the events.</span></li>
       </ul>
       <div class="turn" data-q="circles">
@@ -365,9 +386,9 @@ and silent enough for flowers.</p>
       <div class="yourwalk" id="yourWalk" hidden></div>
       <div class="gift" id="gift" hidden>
         <p class="reply" style="color:var(--ink)">You caught all five fireflies.</p>
-        <p class="muted">Write me the word <b style="color:var(--candle)">firefly</b> and I'll send you the first chapter of <em>Open Your I's</em> before anyone else reads it.</p>
+        <p class="muted">Write me the word <b style="color:var(--candle)">firefly</b> and I'll send you the next story from <em>Open your I's</em> before it goes online.</p>
       </div>
-      <p class="lede">Coaching, a project, a role, or just a conversation. Write me a line and we'll find a time.</p>
+      <p class="lede">Coaching, something you want built, a project, or just a conversation. Write me a line and we'll find a time.</p>
       <div class="mailrow"><code id="mail">endermike@gmail.com</code><button class="mini" id="copyMail" type="button">Copy</button></div>
       <p class="note" id="copyNote" role="status"></p>
       <h3 style="font-size:28px;margin-top:8px">Or follow the journey</h3>
@@ -378,7 +399,7 @@ and silent enough for flowers.</p>
         <button class="btn walk" type="submit">Join</button>
       </form>
       <p class="note" id="joinNote" role="status"></p>
-      <div class="links"><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram @phanteidos1</a></div>
+      <div class="links"><a href="https://replayer.live" target="_blank" rel="noopener">replayer.live</a><a href="https://replayer.live/book" target="_blank" rel="noopener">The book</a><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram @phanteidos1</a></div>
       <p class="small">Antwerp · Koh Phangan · © 2026 Michael Ender</p>
     </section>
   </main>
@@ -521,8 +542,9 @@ and silent enough for flowers.</p>
     "Who am I doing it for?": "Good one. Mine took years to answer honestly.",
     "I don't have one yet": "Then you're probably busy living. That's allowed.",
     "Finding work that fits me": "That's why Generalist Compass exists. Give it your story.",
+    "Reviewing my poker hands": "Drop your hand history in replayer.live. It's free and nothing gets uploaded.",
     "Staying calm at the tables": "Table Ready is for exactly that. Start with the check-in.",
-    "Something nobody has built yet": "Tell me at the center. That's how the last two started.",
+    "Something nobody has built yet": "Tell me at the center. That's how most of mine started.",
     "A story": "Then you're the one people lean in for.",
     "A question": "The best fires I've sat at started with one.",
     "A song": "Bring it on a Wednesday. We'll be quiet for it.",
