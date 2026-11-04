@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://michael-ender.vercel.app/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Crect x='-50' y='-50' width='100' height='100' rx='22' fill='%23080B09'/%3E%3Cg fill='none' stroke='%23F2B653' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M-8 37A38 38 0 1 1 8 37'/%3E%3Cpath d='M8 -24A25 25 0 1 1 -8 -24'/%3E%3C/g%3E%3Ccircle r='6' fill='%23FFE3A6'/%3E%3C/svg%3E">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Michael Ender","alternateName":"Phanteidos1","url":"https://michael-ender.vercel.app/","image":"https://michael-ender.vercel.app/img/center.jpg","jobTitle":"Tournament poker player, coach and builder","homeLocation":"Koh Phangan, Thailand","knowsLanguage":["English","French","Dutch","Hebrew","Spanish"],"sameAs":["https://instagram.com/Phanteidos1","https://substack.com/@phanteidos1","https://allpoetry.com/Michael_Ender","https://replayer.live"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Michael Ender","alternateName":"Phanteidos1","url":"https://michael-ender.vercel.app/","image":"https://michael-ender.vercel.app/img/center.jpg","jobTitle":"Tournament poker player, coach and builder","homeLocation":"Koh Phangan, Thailand","knowsLanguage":["English","French","Dutch","Hebrew","Spanish"],"sameAs":["https://instagram.com/Phanteidos1","https://substack.com/@phanteidos1","https://allpoetry.com/Michael_Ender","https://replayer.live","https://studio-nu-livid.vercel.app/"]}</script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
 <script defer src="/_vercel/insights/script.js"></script>
 <title>Michael Ender</title>
@@ -183,7 +183,14 @@ details.cv .cvbody{display:flex;flex-direction:column;gap:16px;padding-top:14px}
 @keyframes ash{to{opacity:0;transform:translate(-50%,-90px) scale(.7);filter:blur(8px);color:var(--ember);letter-spacing:.3em}}
 .count{text-align:center;font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
 form.addfire{display:flex;gap:8px;flex-wrap:wrap}
-form.addfire input{flex:1 1 220px;min-width:0;font:inherit;font-size:16px;border-radius:999px;border:1.5px solid rgba(242,182,83,.4);background:rgba(0,0,0,.35);color:var(--ink);padding:10px 16px}
+.pit{height:230px}
+@media (max-width:520px){.pit{height:260px}.spark{font-size:14px}}
+.sparks{position:absolute;inset:0;pointer-events:none}
+.spark{position:absolute;white-space:nowrap;max-width:46%;overflow:hidden;text-overflow:ellipsis;font-family:var(--display);font-size:15px;color:#FFE3A6;text-shadow:0 0 8px rgba(242,182,83,.9),0 0 18px rgba(227,121,63,.6);opacity:0;animation:spark 7s ease-in-out infinite}
+.spark small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-shadow:none;margin-right:6px}
+.spark.mine{color:#fff;font-size:17px}
+@keyframes spark{0%,100%{opacity:.15;translate:0 4px}50%{opacity:1;translate:0 -4px}}
+form.addfire input{flex:1 1 140px;min-width:0;font:inherit;font-size:16px;border-radius:999px;border:1.5px solid rgba(242,182,83,.4);background:rgba(0,0,0,.35);color:var(--ink);padding:10px 16px}
 
 /* the center */
 .mailrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -282,7 +289,7 @@ form.join input{flex:1 1 220px;min-width:0;font:inherit;border-radius:999px;bord
         <li class="feat"><b>replayer.live</b><span class="muted">Free tools for tournament players. Replay and share hands from eight poker sites, find your leaks next to winning players, drill your ranges, run ICM spots, and send the hands you're unsure about to a coach. Your hands stay on your device.</span><span class="tags"><span>Replayer</span><span>Leak finder</span><span>Range charts</span><span>Trainer</span><span>ICM calculator</span><span>Coaches</span></span><a href="https://replayer.live" target="_blank" rel="noopener">Open replayer.live →</a></li>
         <li><b>Generalist Compass</b><span class="muted">For people whose careers don't fit one box. It reads your story, finds the thread, and points you to companies that need what you've already done.</span><a href="https://generalist-compass.vercel.app" target="_blank" rel="noopener">Open Generalist Compass →</a></li>
         <li><b>Table Ready</b><span class="muted">For tournament players: should you play today, what variance really looks like at your stakes, and a calm voice after a bad beat.</span><a href="https://table-ready-eosin.vercel.app" target="_blank" rel="noopener">Open Table Ready →</a></li>
-        <li class="feat"><b>Studio</b><span class="muted">Everything I build, in one place: replayer.live, websites for people doing good work like Shaly Blits' Body Mind Reset, small apps and games, and my book. Want something built? Tell me at the center.</span><a href="STUDIO_URL" target="_blank" rel="noopener">Visit the Studio →</a></li>
+        <li class="feat"><b>Studio</b><span class="muted">Everything I build, in one place: replayer.live, websites for people doing good work like Shaly Blits' Body Mind Reset, small apps and games, and my book. Want something built? Tell me at the center.</span><a href="https://studio-nu-livid.vercel.app/" target="_blank" rel="noopener">Visit the Studio →</a></li>
       </ul>
       <div class="turn" data-q="building">
         <h3>Your turn: what would you want a tool for?</h3>
@@ -359,13 +366,14 @@ and silent enough for flowers.</p>
         <p class="reply" aria-live="polite"></p>
       </div>
       <div class="fire">
-        <h3>Drop something in the fire</h3>
-        <p class="muted" style="font-size:16px">Every Wednesday at the Drop Circle, we each give the fire something we don't need anymore. A fear, a habit, an old story about ourselves. You can do it here too. It stays anonymous and nobody sees who dropped what.</p>
-        <div class="pit" aria-hidden="true"><div class="flame"><i></i><i></i><i></i></div><div class="logs"></div><p class="ghost" id="ghost"></p></div>
+        <h3>Leave a spark by the fire</h3>
+        <p class="muted" style="font-size:16px">Everyone who walks this far leaves their first name and one word: what they bring, what they need, what's alive in them today. Your spark glows here for the next people who come.</p>
+        <div class="pit" id="pit" aria-hidden="true"><div class="sparks" id="sparks"></div><div class="flame"><i></i><i></i><i></i></div><div class="logs"></div><p class="ghost" id="ghost"></p></div>
         <p class="count" id="fireCount"></p>
         <form class="addfire" id="fireForm" novalidate>
-          <label for="dropText" class="sr">What you don't need anymore</label><input id="dropText" maxlength="80" placeholder="What I don't need anymore..." autocomplete="off">
-          <button class="btn walk" type="submit">Drop it in the fire</button>
+          <label for="fireName" class="sr">Your first name</label><input id="fireName" maxlength="20" placeholder="First name" autocomplete="given-name">
+          <label for="fireWord" class="sr">One word</label><input id="fireWord" maxlength="20" placeholder="One word" autocomplete="off" autocapitalize="none">
+          <button class="btn walk" type="submit">Add my spark</button>
         </form>
         <p class="note" id="fireNote" role="status"></p>
       </div>
@@ -391,7 +399,7 @@ and silent enough for flowers.</p>
         <button class="btn walk" type="submit">Join</button>
       </form>
       <p class="note" id="joinNote" role="status"></p>
-      <div class="links"><a href="STUDIO_URL" target="_blank" rel="noopener">Studio</a><a href="https://replayer.live" target="_blank" rel="noopener">replayer.live</a><a href="https://replayer.live/book" target="_blank" rel="noopener">The book</a><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram @phanteidos1</a></div>
+      <div class="links"><a href="https://studio-nu-livid.vercel.app/" target="_blank" rel="noopener">Studio</a><a href="https://replayer.live" target="_blank" rel="noopener">replayer.live</a><a href="https://replayer.live/book" target="_blank" rel="noopener">The book</a><a href="https://substack.com/@phanteidos1" target="_blank" rel="noopener">Substack</a><a href="https://allpoetry.com/Michael_Ender" target="_blank" rel="noopener">Poems</a><a href="https://phanteidos1.netlify.app" target="_blank" rel="noopener">The Poker Monk</a><a href="https://beyond-ethereal-path.base44.app/" target="_blank" rel="noopener">The Drop</a><a href="https://instagram.com/Phanteidos1" target="_blank" rel="noopener">Instagram @phanteidos1</a></div>
       <p class="small">Antwerp · Koh Phangan · © 2026 Michael Ender</p>
     </section>
   </main>
@@ -572,47 +580,50 @@ and silent enough for flowers.</p>
     this.textContent = "Flip again"; state.answers.poker = end; store.set(state);
   };
 
-  // the fire: what others let go of rises and burns away, one at a time, anonymously
-  const ghost = document.getElementById("ghost"), fireNote = document.getElementById("fireNote"), fireCount = document.getElementById("fireCount");
-  let drops = null, dropCount = 0, gi = 0, ghostTimer = 0;
-  function renderCount(){ fireCount.textContent = dropCount ? dropCount + (dropCount === 1 ? " thing" : " things") + " dropped in the fire so far" : "Nothing in the fire yet. You could be the first."; }
-  function nextGhost(){
-    clearTimeout(ghostTimer);
-    if (!drops || !drops.length || cur !== 5) return;
-    ghost.classList.remove("go"); void ghost.offsetWidth;
-    ghost.textContent = drops[gi++ % drops.length]; ghost.classList.add("go");
-    ghostTimer = setTimeout(nextGhost, 5600);
+  // the fire: first names and one word each, glowing as sparks around the flame
+  const ghost = document.getElementById("ghost"), fireNote = document.getElementById("fireNote"), fireCount = document.getElementById("fireCount"), sparksEl = document.getElementById("sparks");
+  const WORD = /^[\p{L}\p{M}]+(?:['\-][\p{L}\p{M}]+)*$/u;
+  let sparks = null, sparkCount = 0;
+  function renderCount(){ fireCount.textContent = sparkCount ? sparkCount + (sparkCount === 1 ? " spark" : " sparks") + " by the fire so far" : "No sparks yet. You could be the first."; }
+  // fixed spots around the flame, so names never sit on the fire or on each other
+  const SPOTS = [[50,6,"c"],[6,20,"l"],[94,20,"r"],[6,40,"l"],[94,40,"r"],[6,60,"l"],[94,60,"r"],[6,80,"l"],[94,80,"r"],[30,6,"l"],[70,6,"r"],[22,30,"l"],[78,30,"r"],[22,50,"l"]];
+  function addSpark(it, i, mine){
+    const [x, y, side] = SPOTS[i], el = document.createElement("span"); el.className = "spark" + (mine ? " mine" : "");
+    el.style.top = y + "%";
+    if (side === "l") el.style.left = x + "%"; else if (side === "r") el.style.right = (100 - x) + "%"; else { el.style.left = "50%"; el.style.transform = "translate(-50%,0)"; }
+    el.style.animationDelay = (-(i * 1.3) % 7).toFixed(2) + "s";
+    const n = document.createElement("small"); n.textContent = it.name; el.append(n, document.createTextNode(it.word));
+    sparksEl.append(el);
   }
+  function renderSparks(){ sparksEl.innerHTML = ""; (sparks || []).slice(0, innerWidth < 520 ? 9 : 14).forEach((it, i) => addSpark(it, i, state.spark && i === 0 && state.spark.word === it.word && state.spark.name === it.name)); }
   async function loadFire(){
-    if (!drops){
-      try { const r = await fetch("/api/fire", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({action:"list"})}); if (!r.ok) throw 0; const d = await r.json(); drops = d.items || []; dropCount = d.count || 0; }
-      catch(e){ drops = []; dropCount = 0; fireNote.textContent = "The fire is shared once the site is live."; }
+    if (!sparks){
+      try { const r = await fetch("/api/fire", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({action:"list"})}); if (!r.ok) throw 0; const d = await r.json(); sparks = d.items || []; sparkCount = d.count || sparks.length; }
+      catch(e){ sparks = state.spark ? [state.spark] : []; sparkCount = sparks.length; fireNote.textContent = "The fire is shared once the site is live."; }
     }
-    renderCount(); if (!reduce) nextGhost();
+    renderCount(); renderSparks();
   }
-  function burn(text, from){
+  function rise(text){
     if (reduce) return;
-    const pit = document.querySelector(".pit").getBoundingClientRect();
-    const t = document.createElement("div"); t.className = "burn"; t.textContent = text;
-    t.style.left = (from.left + 16) + "px"; t.style.top = (from.top + 8) + "px"; document.body.append(t);
-    requestAnimationFrame(() => requestAnimationFrame(() => { t.style.left = (pit.left + pit.width / 2) + "px"; t.style.top = (pit.bottom - 70) + "px"; t.style.transform = "translate(-50%,0) scale(.85)"; t.style.color = "#F2B653"; }));
-    setTimeout(() => t.classList.add("ash"), 1150);
-    setTimeout(() => t.remove(), 2900);
+    ghost.classList.remove("go"); void ghost.offsetWidth; ghost.textContent = text; ghost.classList.add("go");
   }
   document.getElementById("fireForm").addEventListener("submit", async e => {
     e.preventDefault();
-    const inp = document.getElementById("dropText"), text = inp.value.trim();
-    if (text.length < 2){ fireNote.textContent = "Write what you want to let go of."; return; }
-    const from = inp.getBoundingClientRect();
+    const ni = document.getElementById("fireName"), wi = document.getElementById("fireWord");
+    const name = ni.value.trim(), word = wi.value.trim();
+    if (!name || !word){ fireNote.textContent = "Your first name and one word, please."; return; }
+    if (!WORD.test(name)){ fireNote.textContent = "Just your first name, letters only."; return; }
+    if (!WORD.test(word)){ fireNote.textContent = "One word, letters only. No links or symbols."; return; }
+    let item = {name: name.charAt(0).toLocaleUpperCase() + name.slice(1), word: word.toLocaleLowerCase()};
     try {
-      const r = await fetch("/api/fire", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({action:"drop", text})});
+      const r = await fetch("/api/fire", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({action:"add", name, word})});
       const d = await r.json().catch(() => ({}));
       if (!r.ok){ if (r.status === 503) throw 0; fireNote.textContent = d.error || "The fire is having trouble. Try again in a minute."; return; }
-      dropCount = d.count || dropCount + 1;
-    } catch(err){ dropCount += 1; }
-    inp.value = ""; burn(text, from);
-    setTimeout(() => { fireNote.textContent = "It's gone. See you around the fire on a Wednesday."; renderCount(); }, reduce ? 0 : 2200);
-    state.dropped = true; store.set(state);
+      sparkCount = d.count || sparkCount + 1; if (d.item) item = d.item;
+    } catch(err){ sparkCount += 1; }
+    sparks = [item].concat(sparks || []); state.spark = item; store.set(state);
+    wi.value = ""; rise(item.name + " · " + item.word);
+    setTimeout(() => { renderSparks(); renderCount(); fireNote.textContent = "Your spark is lit. See you around the fire on a Wednesday."; }, reduce ? 0 : 1600);
   });
 
   // the center: what you left along the way
@@ -623,7 +634,7 @@ and silent enough for flowers.</p>
     if (a.writing) lines.push("A question you took home: <b>" + a.writing + "</b>");
     if (typeof a.poker === "number") lines.push("Your 100 flips: <b>" + (a.poker > 0 ? "+" : "") + a.poker + "</b>");
     if (a.circles) lines.push("You bring to the fire: <b>" + a.circles + "</b>");
-    if (state.dropped) lines.push("And you dropped something in the fire. <b>Good riddance.</b>");
+    if (state.spark) lines.push("Your spark by the fire: <b>" + state.spark.word.replace(/[<>&]/g, "") + "</b>");
     box.hidden = !lines.length;
     box.innerHTML = lines.length ? '<span class="mono where">Your walk</span>' + lines.map(l => "<p>" + l + "</p>").join("") + '<p>Tell me about any of it when you write.</p>' : "";
     document.getElementById("gift").hidden = state.flies.length < 5;

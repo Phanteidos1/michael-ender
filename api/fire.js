@@ -1,6 +1,6 @@
-// The fire: like at the Wednesday Drop Circle, visitors drop something they don't need anymore.
-// Anonymous. Stored in Upstash Redis list "me:drops" (newest first, last 500 kept).
-// To remove an entry, delete it from the list in the Upstash console.
+// The fire: visitors leave their first name and one word. Everyone after sees them glowing as sparks.
+// Stored in Upstash Redis list "me:fire" (newest first, last 500 kept). Total in "me:fire:count".
+// No swear filter: to remove an entry, delete it from the list "me:fire" in the Upstash console.
 
 import { createHash } from "node:crypto";
 
@@ -18,8 +18,9 @@ async function redis(cmds) {
   return d.map(x => x.result);
 }
 
-// Letters (any language), digits, spaces and light punctuation only: no links, no markup.
-const clean = (v, n) => String(v == null ? "" : v).normalize("NFC").replace(/[^\p{L}\p{M}\p{N} ',.!?\-]/gu, "").replace(/\s+/g, " ").trim().slice(0, n);
+// Letters (any language) only, plus hyphen and apostrophe inside a word: no links, emails, digits or symbols.
+const WORD = /^[\p{L}\p{M}]+(?:['\-][\p{L}\p{M}]+)*$/u;
+const tidy = v => String(v == null ? "" : v).normalize("NFC").trim();
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Use POST" });
@@ -27,21 +28,23 @@ export default async function handler(req, res) {
   const b = req.body || {};
   try {
     if (b.action === "list") {
-      const [all, count] = await redis([["LRANGE", "me:drops", 0, 29], ["GET", "me:drops:count"]]);
-      const items = (all || []).map(x => { try { return JSON.parse(x).text; } catch (e) { return null; } }).filter(Boolean);
+      const [all, count] = await redis([["LRANGE", "me:fire", 0, 39], ["GET", "me:fire:count"]]);
+      const items = (all || []).map(x => { try { const o = JSON.parse(x); return o.name && o.word ? { name: o.name, word: o.word } : null; } catch (e) { return null; } }).filter(Boolean);
       return res.status(200).json({ items, count: Number(count) || 0 });
     }
-    if (b.action === "drop") {
-      const raw = String(b.text == null ? "" : b.text);
-      if (/https?:|www\.|\.(com|net|org|io|co|app|me|ly|xyz)\b|@/i.test(raw)) return res.status(400).json({ error: "Just words, no links." });
-      const text = clean(raw, 80);
-      if (text.length < 2) return res.status(400).json({ error: "Write what you want to let go of." });
+    if (b.action === "add") {
+      const name = tidy(b.name), word = tidy(b.word);
+      if (!name || !word) return res.status(400).json({ error: "Your first name and one word, please." });
+      if (name.length > 20 || !WORD.test(name)) return res.status(400).json({ error: "Just your first name, letters only." });
+      if (word.length > 20 || !WORD.test(word)) return res.status(400).json({ error: "One word, letters only. No links or symbols." });
       const ip = String((req.headers["x-forwarded-for"] || "").split(",")[0] || "x");
-      const key = "me:rl:drop:" + createHash("sha256").update(ip).digest("hex").slice(0, 16);
+      const key = "me:rl:fire:" + createHash("sha256").update(ip).digest("hex").slice(0, 16);
       const [n] = await redis([["INCR", key], ["EXPIRE", key, 86400, "NX"]]);
-      if (n > 5) return res.status(429).json({ error: "The fire has taken enough from you today. Come back tomorrow." });
-      const [, , count] = await redis([["LPUSH", "me:drops", JSON.stringify({ text, at: Date.now() })], ["LTRIM", "me:drops", 0, 499], ["INCR", "me:drops:count"]]);
-      return res.status(200).json({ ok: true, count });
+      if (n > 3) return res.status(429).json({ error: "Three sparks a day. Come back tomorrow." });
+      const cap = w => w.charAt(0).toLocaleUpperCase() + w.slice(1);
+      const entry = { name: cap(name), word: word.toLocaleLowerCase(), at: Date.now() };
+      const [, , count] = await redis([["LPUSH", "me:fire", JSON.stringify(entry)], ["LTRIM", "me:fire", 0, 499], ["INCR", "me:fire:count"]]);
+      return res.status(200).json({ ok: true, count, item: { name: entry.name, word: entry.word } });
     }
     return res.status(400).json({ error: "Unknown action" });
   } catch (e) {

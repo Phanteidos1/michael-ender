@@ -7,3 +7,5 @@ Mike's central site: writer, builder, tournament poker pro and coach, connector.
 - Links: Generalist Compass https://generalist-compass.vercel.app, Table Ready https://table-ready-eosin.vercel.app, Substack https://substack.com/@phanteidos1, poems https://allpoetry.com/Michael_Ender, coaching https://phanteidos1.netlify.app, The Drop https://beyond-ethereal-path.base44.app/, Instagram https://instagram.com/Phanteidos1
 - Story text comes from his book "Open Your I's": keep it specific and plain, not generic, not too poetic. English. No em dashes.
 - Keep the labyrinth usable: walk/back buttons, ring labels clickable, arrow keys, works at 360px and in dark mode.
+- The fire (Circles): first name + one word, shown as sparks. `api/fire.js` stores them in Upstash list `me:fire` (letters only, 3 per IP per day, no swear filter: delete rude ones by hand in Upstash).
+- Studio (portfolio, links here as "About"): https://studio-nu-livid.vercel.app/
