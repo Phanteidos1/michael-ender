@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casebook</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: phone-first single column, sticky header with tab strip, case cards that open in place */
+:root {
+  --bg: #f3f5f4;
+  --surface: #ffffff;
+  --ink: #17201d;
+  --muted: #5d6b66;
+  --line: #dbe2df;
+  --accent: #1f6f5c;
+  --accent-soft: #e1efea;
+  --warn: #a85a12;
+  --warn-soft: #fbeedd;
+  --crit: #b0322b;
+  --crit-soft: #fae3e1;
+  --idle: #6d7480;
+  --idle-soft: #eceef1;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1513; --surface: #17201d; --ink: #e6ece9; --muted: #9aaaa4; --line: #2a3632;
+    --accent: #5fc2a6; --accent-soft: #19332b; --warn: #e8a35c; --warn-soft: #3a2a17;
+    --crit: #f08a82; --crit-soft: #3d1f1d; --idle: #a3aab5; --idle-soft: #262b31; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1513; --surface: #17201d; --ink: #e6ece9; --muted: #9aaaa4; --line: #2a3632;
+  --accent: #5fc2a6; --accent-soft: #19332b; --warn: #e8a35c; --warn-soft: #3a2a17;
+  --crit: #f08a82; --crit-soft: #3d1f1d; --idle: #a3aab5; --idle-soft: #262b31; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 720px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.head-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-block: 14px 6px; }
+h1 { font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+.stamp { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-block: 4px 10px; }
+nav::-webkit-scrollbar { display: none; }
+nav a { flex: none; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.9rem; padding: 6px 12px; border-radius: 999px; }
+nav a[aria-current="page"] { background: var(--accent); color: var(--surface); }
+nav a:focus-visible, button:focus-visible, summary:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+main { padding-block: 18px 48px; display: grid; gap: 22px; }
+section[hidden] { display: none; }
+h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+h3 { margin: 0; font-size: 1.05rem; }
+p { margin: 0; }
+.block { display: grid; gap: 10px; }
+.lead { font-size: 1.05rem; text-wrap: pretty; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.muted { color: var(--muted); }
+.small { font-size: 0.88rem; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* Deadlines timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.timeline li { display: grid; grid-template-columns: 74px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.timeline li:first-child { border-top: 0; }
+.when { font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.3; }
+.when b { display: block; font-size: 0.95rem; color: var(--ink); }
+.when span { color: var(--muted); }
+.when.soon b { color: var(--crit); }
+.when.past { opacity: 0.55; }
+.tl-body { min-width: 0; display: grid; gap: 2px; }
+.tl-case { font-size: 0.78rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+
+/* Chips */
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.s-Active { color: var(--accent); background: var(--accent-soft); }
+.s-Waiting { color: var(--warn); background: var(--warn-soft); }
+.s-Pending { color: var(--warn); background: var(--warn-soft); }
+.s-Parked, .s-Done { color: var(--idle); background: var(--idle-soft); }
+.conf { color: var(--crit); background: var(--crit-soft); }
+
+/* Case cards */
+.cases { display: grid; gap: 10px; }
+details.case { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+details.case > summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid; gap: 6px; }
+details.case > summary::-webkit-details-marker { display: none; }
+.sum-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sum-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.who { font-size: 0.85rem; color: var(--muted); }
+.case-body { padding: 0 16px 16px; display: grid; gap: 14px; border-top: 1px solid var(--line); padding-top: 14px; }
+.kv { display: grid; gap: 8px; }
+.kv div { display: grid; gap: 1px; }
+.kv dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 600; }
+.kv dd { margin: 0; }
+.story { display: grid; gap: 10px; max-width: 65ch; }
+ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.learned { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+
+/* Tables */
+.tscroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; background: var(--bg); }
+td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.score { display: inline-block; min-width: 2.2em; text-align: center; font-family: var(--font-mono); font-weight: 500; border-radius: 6px; padding: 1px 4px; }
+.score.hi { background: var(--accent-soft); color: var(--accent); }
+.score.mid { background: var(--warn-soft); color: var(--warn); }
+.score.lo { background: var(--idle-soft); color: var(--idle); }
+
+/* Questions checklist */
+.qlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.qlist label { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; }
+.qlist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--accent); }
+.qlist input:checked + span { color: var(--muted); text-decoration: line-through; }
+.qcase { display: block; font-size: 0.75rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+
+/* Glossary */
+#gsearch { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+dl.gloss { margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+dl.gloss div { padding: 10px 14px; border-top: 1px solid var(--line); }
+dl.gloss div:first-child { border-top: 0; }
+dl.gloss dt { font-weight: 600; }
+dl.gloss dd { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+.links { display: grid; gap: 8px; }
+.links a { display: grid; gap: 2px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); }
+.links a b { color: var(--accent); font-weight: 600; }
+.links a span { font-size: 0.85rem; color: var(--muted); }
+.next-card { display: grid; gap: 6px; }
+.next-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); font-weight: 600; }
+#err { color: var(--crit); }
+@media (prefers-reduced-motion: no-preference) { details.case[open] .case-body { animation: fade .18s ease-out; } @keyframes fade { from { opacity: .4 } to { opacity: 1 } } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="head-row">
+      <h1>Casebook</h1>
+      <span class="stamp" id="stamp">Updated</span>
+    </div>
+    <nav id="nav" aria-label="Sections">
+      <a href="#now">Now</a>
+      <a href="#cases">Cases</a>
+      <a href="#dealmap">Deal map</a>
+      <a href="#questions">Questions</a>
+      <a href="#about">About</a>
+      <a href="#log">Log &amp; ideas</a>
+      <a href="#glossary">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+  <p class="muted" id="loading">Loading cases…</p>
+</main>
+
+<script>
+const VIEWS = ["now", "cases", "dealmap", "questions", "about", "log", "glossary"];
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tagConf = s => esc(s).replace(/\[(Certain|Likely|Guessing)[^\]]*\]/g, m => `<span class="muted small">${m}</span>`);
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function today() { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function parse(iso) { const [y, m, d] = iso.split("-").map(Number); return new Date(y, m - 1, d); }
+function daysTo(iso) { return Math.round((parse(iso) - today()) / 86400000); }
+function fmt(iso) { const d = parse(iso); return `${MONTHS[d.getMonth()]} ${d.getDate()}`; }
+function rel(n) { return n < 0 ? `${-n}d ago` : n === 0 ? "today" : n === 1 ? "tomorrow" : `in ${n}d`; }
+function chip(status) { const k = status.split(" ")[0]; return `<span class="chip s-${esc(k)}">${esc(status)}</span>`; }
+function caseId(name, D) { const c = D.cases.find(c => name.toLowerCase().startsWith(c.name.toLowerCase().split(" ")[0].toLowerCase())); return c ? c.id : null; }
+
+function loadDone() { try { return JSON.parse(localStorage.getItem("qdone") || "{}"); } catch { return {}; } }
+function saveDone(o) { try { localStorage.setItem("qdone", JSON.stringify(o)); } catch {} }
+
+function timeline(D, limit) {
+  const rows = D.deadlines.slice().sort((a, b) => a.date.localeCompare(b.date));
+  const shown = limit ? rows.filter(r => daysTo(r.date) >= -1).slice(0, limit) : rows;
+  return `<ul class="timeline">${shown.map(r => {
+    const n = daysTo(r.date), cls = n < 0 ? "past" : n <= 5 ? "soon" : "";
+    const id = caseId(r.case, D);
+    const caseLink = id ? `<a class="tl-case" href="#${id}">${esc(r.case)}</a>` : `<span class="tl-case">${esc(r.case)}</span>`;
+    return `<li><div class="when ${cls}"><b>${esc(r.dateLabel && /^\w{3} \d/.test(r.dateLabel) ? r.dateLabel : fmt(r.date))}</b><span>${r.dateLabel && !/^\w{3} \d/.test(r.dateLabel) ? esc(r.dateLabel) + " · " : ""}${rel(n)}</span></div>
+      <div class="tl-body">${caseLink}<p>${esc(r.what)}</p><p class="small muted">Owner: ${esc(r.owner)}</p></div></li>`;
+  }).join("")}</ul>`;
+}
+
+function viewNow(D) {
+  const mine = D.cases.filter(c => c.status !== "Done" && c.status !== "Parked");
+  return `<section data-view="now" class="block">
+    <div class="block"><h2>Where things stand</h2><p class="lead">${esc(D.summary)}</p></div>
+    <div class="block"><h2>Coming up</h2><div class="panel">${timeline(D, 5)}</div></div>
+    <div class="block"><h2>Next move per case</h2>
+      <div class="cases">${mine.map(c => `<a class="panel next-card" href="#${c.id}" style="text-decoration:none;color:inherit">
+        <div class="sum-top"><h3>${esc(c.name)}</h3>${chip(c.status)}</div>
+        <p>${esc(c.next)}</p>
+        <p class="small muted"><span class="label">Mike</span> · ${esc(c.mike)}</p></a>`).join("")}</div>
+    </div>
+    <div class="block" ${D.links.length ? "" : "hidden"}><h2>Full documents</h2><div class="links">${D.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener"><b>${esc(l.label)}</b><span>${esc(l.note)}</span></a>`).join("")}</div></div>
+  </section>`;
+}
+
+function caseCard(c) {
+  const facts = c.facts ? `<div class="tscroll"><table><thead><tr><th>Item</th><th>What we know</th><th>Confidence</th></tr></thead><tbody>${c.facts.map(f => `<tr><td>${esc(f[0])}</td><td>${esc(f[1])}</td><td class="small muted">${esc(f[2])}</td></tr>`).join("")}</tbody></table></div>` : "";
+  const people = c.people ? `<div class="tscroll"><table><thead><tr><th>Name</th><th>Role</th><th>Link to D.</th><th>Priority</th></tr></thead><tbody>${c.people.map(p => `<tr><td>${esc(p[0])}</td><td>${esc(p[1])}</td><td>${esc(p[2])}</td><td>${esc(p[3])}</td></tr>`).join("")}</tbody></table></div>` : "";
+  const dl = c.deadline ? ` · <span class="mono">${fmt(c.deadline)}</span> <span class="muted">(${rel(daysTo(c.deadline))})</span>` : "";
+  return `<details class="case" id="${c.id}">
+    <summary>
+      <div class="sum-top"><h3>${esc(c.name)}</h3><div class="sum-chips">${c.confidential ? '<span class="chip conf">Confidential</span>' : ""}${chip(c.status)}</div></div>
+      <p>${esc(c.oneLine)}</p>
+      <p class="who">${esc(c.who)} · ${esc(c.priority)} priority${dl}</p>
+    </summary>
+    <div class="case-body">
+      <dl class="kv"><div><dt>Next step</dt><dd>${esc(c.next)}</dd></div><div><dt>Where Mike helps</dt><dd>${esc(c.mike)}</dd></div></dl>
+      <div class="story">${c.story.map(p => `<p>${tagConf(p)}</p>`).join("")}</div>
+      ${c.assets ? `<div class="block"><h2>What it still has</h2><ul class="plain">${c.assets.map(a => `<li>${esc(a)}</li>`).join("")}</ul></div>` : ""}
+      ${c.watch ? `<div class="block"><h2>Things to notice</h2><ul class="plain">${c.watch.map(a => `<li>${tagConf(a)}</li>`).join("")}</ul></div>` : ""}
+      ${facts}${people}
+      ${c.id === "p-case" ? `<a href="#dealmap" class="tl-case">Open the Deal map buyers and investors view</a>` : ""}
+      ${c.learned ? `<p class="learned">${esc(c.learned)}</p>` : ""}
+    </div>
+  </details>`;
+}
+
+function viewCases(D) {
+  const order = { Active: 0, Waiting: 1, "Pending start": 2, Parked: 3, Done: 4 };
+  const list = D.cases.slice().sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9));
+  return `<section data-view="cases" class="block"><h2>All cases · tap to open</h2><div class="cases">${list.map(caseCard).join("")}</div></section>`;
+}
+
+function viewDealmap(D) {
+  const P = D.dealmap;
+  const sc = n => `<span class="score ${n >= 9 ? "hi" : n >= 7 ? "mid" : "lo"}">${n}</span>`;
+  return `<section data-view="dealmap" class="block" style="gap:22px">
+    <div class="block"><h2>Bottom line</h2><p class="lead">${esc(P.bottomLine)}</p><p class="muted">${esc(P.buyersVsInvestors)}</p></div>
+    <div class="block"><h2>Top 10 strategic buyers</h2><p class="small muted">${esc(P.buyerTests)}</p>
+      <div class="tscroll"><table><thead><tr><th>#</th><th>Buyer</th><th>Why</th><th>/12</th></tr></thead><tbody>
+      ${P.buyers.map(b => `<tr><td class="num">${b[0]}</td><td><b>${esc(b[1])}</b></td><td>${esc(b[2])}</td><td>${sc(b[3])}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="block"><h2>Investors, in order</h2><p class="small muted">Funds that backed a neighbor go first. A fund that already owns a direct rival usually passes.</p>
+      <div class="tscroll"><table><thead><tr><th>#</th><th>Investor</th><th>Why</th><th>Conflict</th></tr></thead><tbody>
+      ${P.investors.map(i => `<tr><td class="num">${esc(i[0])}</td><td><b>${esc(i[1])}</b></td><td>${esc(i[2])}</td><td>${esc(i[3])}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="block"><h2>Direct rivals</h2>
+      <div class="tscroll"><table><thead><tr><th>Company</th><th>Overlap</th><th>Funding</th></tr></thead><tbody>
+      ${P.competitors.map(c => `<tr><td><b>${esc(c[0])}</b></td><td>${esc(c[1])}</td><td class="small">${esc(c[2])}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="block"><h2>Open questions for the founders</h2><ul class="plain">${P.openQuestions.map(q => `<li>${esc(q)}</li>`).join("")}</ul></div>
+    ${D.links[1] ? `<div class="links"><a href="${esc(D.links[1].url)}" target="_blank" rel="noopener"><b>Full Deal map doc</b><span>Story, method, sources and confidence per row</span></a></div>` : ""}
+  </section>`;
+}
+
+function viewQuestions(D) {
+  const done = loadDone();
+  return `<section data-view="questions" class="block"><h2>For the hour with D.</h2><p class="small muted">Tick them off as you ask. Ticks stay on this device only.</p>
+    <ul class="qlist">${D.questions.map((q, i) => { const key = q.case + ":" + q.q; const id = caseId(q.case, D);
+      return `<li><label for="q${i}"><input type="checkbox" id="q${i}" data-key="${esc(key)}" ${done[key] ? "checked" : ""}><span>${id ? `<a class="qcase" href="#${id}">${esc(q.case)}</a>` : `<span class="qcase">${esc(q.case)}</span>`}${esc(q.q)}</span></label></li>`; }).join("")}</ul></section>`;
+}
+
+function viewAbout(D) {
+  const X = D.who;
+  return `<section data-view="about" class="block" style="gap:22px">
+    <div class="block"><h2>Who D. is</h2><p>${esc(X.background)}</p></div>
+    <div class="block"><h2>How he thinks</h2><p class="small muted">From his July 2026 Deal map interview.</p>
+      <ol class="plain" style="padding-left:1.3em">${X.beliefs.map(b => `<li>${esc(b)}</li>`).join("")}</ol></div>
+    <div class="block"><h2>All dates</h2><div class="panel">${timeline(D)}</div></div>
+  </section>`;
+}
+
+function viewLog(D) {
+  return `<section data-view="log" class="block" style="gap:22px">
+    <div class="block"><h2>What Mike has done · newest first</h2>
+      <div class="tscroll"><table><thead><tr><th>Date</th><th>Case</th><th>What</th><th>Outcome</th></tr></thead><tbody>
+      ${D.log.map(l => `<tr><td class="num">${esc(l.date)}</td><td>${esc(l.case)}</td><td>${esc(l.what)}</td><td class="muted">${esc(l.outcome)}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="block"><h2>Ideas backlog</h2>${D.ideas.map(i => `<div class="panel block" style="gap:4px"><p><b>${esc(i.idea)}</b></p><p class="small">${esc(i.why)}</p><p class="small muted">${esc(i.date)} · ${esc(i.status)}</p></div>`).join("")}</div>
+  </section>`;
+}
+
+function viewGlossary(D) {
+  const g = D.glossary.slice().sort((a, b) => a[0].localeCompare(b[0]));
+  return `<section data-view="glossary" class="block"><h2>Glossary · ${g.length} terms</h2>
+    <input id="gsearch" type="search" placeholder="Search a term" aria-label="Search glossary">
+    <dl class="gloss" id="glist">${g.map(t => `<div data-t="${esc((t[0] + " " + t[1]).toLowerCase())}"><dt>${esc(t[0])}</dt><dd>${esc(t[1])}</dd></div>`).join("")}</dl></section>`;
+}
+
+function route(D) {
+  const h = (location.hash || "#now").slice(1);
+  const isCase = D.cases.some(c => c.id === h);
+  const view = isCase ? "cases" : VIEWS.includes(h) ? h : "now";
+  document.querySelectorAll("section[data-view]").forEach(s => s.hidden = s.dataset.view !== view);
+  document.querySelectorAll("#nav a").forEach(a => { if (a.getAttribute("href") === "#" + view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  const cur = document.querySelector('#nav a[aria-current="page"]'); if (cur) cur.scrollIntoView({ block: "nearest", inline: "center" });
+  if (isCase) { const el = document.getElementById(h); el.open = true; requestAnimationFrame(() => el.scrollIntoView({ block: "start" })); }
+  else window.scrollTo(0, 0);
+}
+
+function boot(D) {
+  document.getElementById("stamp").textContent = "Updated " + fmt(D.updated);
+  document.getElementById("app").innerHTML = viewNow(D) + viewCases(D) + viewDealmap(D) + viewQuestions(D) + viewAbout(D) + viewLog(D) + viewGlossary(D);
+  document.getElementById("app").addEventListener("change", e => {
+    if (e.target.matches(".qlist input")) { const d = loadDone(); d[e.target.dataset.key] = e.target.checked; saveDone(d); }
+  });
+  document.getElementById("gsearch").addEventListener("input", e => {
+    const q = e.target.value.trim().toLowerCase();
+    document.querySelectorAll("#glist > div").forEach(d => d.hidden = q && !d.dataset.t.includes(q));
+  });
+  window.addEventListener("hashchange", () => route(D));
+  route(D);
+}
+function fail(err) {
+  document.getElementById("app").innerHTML = `<p id="err">Could not load the case data (${esc(err.message)}). Refresh the page.</p>`;
+}
+(function(){
+  const app = document.getElementById("app");
+  const nav = document.getElementById("nav"); nav.hidden = true;
+  const d64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  let enc;
+  async function open(pw) {
+    const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: d64(enc.salt), iterations: enc.iter, hash: "SHA-256" }, km, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: d64(enc.iv) }, key, d64(enc.ct));
+    return JSON.parse(new TextDecoder().decode(pt));
+  }
+  function unlocked(D) { nav.hidden = false; boot(D); }
+  function gate(msg) {
+    app.innerHTML = '<form id="gate" class="panel block" style="max-width:360px">' +
+      '<h2>Private</h2><label for="pw">Password</label>' +
+      '<input id="pw" type="password" autocomplete="current-password" style="font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)">' +
+      '<label class="small" style="display:flex;gap:8px;align-items:center"><input id="remember" type="checkbox" checked> Remember on this device</label>' +
+      '<button type="submit" style="font:inherit;font-weight:600;padding:10px;border-radius:10px;border:0;background:var(--accent);color:var(--surface);cursor:pointer">Open</button>' +
+      (msg ? '<p id="err">' + msg + '</p>' : '') + '</form>';
+    document.getElementById("gate").addEventListener("submit", async e => {
+      e.preventDefault();
+      const pw = document.getElementById("pw").value, rem = document.getElementById("remember").checked;
+      let D;
+      try { D = await open(pw); } catch { return gate("Wrong password. Try again."); }
+      if (rem) { try { localStorage.setItem("cb_pw", pw); } catch {} }
+      try { unlocked(D); } catch (err) { console.error(err); fail(err); }
+    });
+    document.getElementById("pw").focus();
+  }
+  fetch("data.enc.json", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(async e => {
+    enc = e;
+    let saved = null; try { saved = localStorage.getItem("cb_pw"); } catch {}
+    if (saved) { try { return unlocked(await open(saved)); } catch { try { localStorage.removeItem("cb_pw"); } catch {} } }
+    gate("");
+  }).catch(fail);
+})();
+</script>
+</body>
+</html>
